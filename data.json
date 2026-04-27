@@ -1,0 +1,1154 @@
+﻿{
+    "users":  [
+                  {
+                      "id":  "shvmed81mo73vad8",
+                      "name":  "Admin Soteryan",
+                      "username":  "admin",
+                      "role":  "Administrator",
+                      "email":  "admin@soteryan.com",
+                      "phone":  "+998 90 000 00 00",
+                      "accessLevel":  "admin",
+                      "active":  true,
+                      "createdAt":  1768908148028
+                  },
+                  {
+                      "id":  "w5kutqsomo7nbc4h",
+                      "name":  "Jafar Baghirov",
+                      "username":  "jafar",
+                      "email":  "jafar@soteryan.com",
+                      "phone":  "",
+                      "role":  "VP",
+                      "accessLevel":  "employee",
+                      "active":  true,
+                      "createdAt":  1776716809505,
+                      "permissions":  {
+                                          "dashboard":  {
+                                                            "view":  true,
+                                                            "edit":  false,
+                                                            "scope":  "own"
+                                                        },
+                                          "deals":  {
+                                                        "view":  true,
+                                                        "edit":  false,
+                                                        "scope":  "own"
+                                                    },
+                                          "accounts":  {
+                                                           "view":  true,
+                                                           "edit":  true,
+                                                           "scope":  "group"
+                                                       },
+                                          "contacts":  {
+                                                           "view":  true,
+                                                           "edit":  false,
+                                                           "scope":  "own"
+                                                       },
+                                          "tasks":  {
+                                                        "view":  true,
+                                                        "edit":  false,
+                                                        "scope":  "own"
+                                                    },
+                                          "calendar":  {
+                                                           "view":  true,
+                                                           "edit":  false,
+                                                           "scope":  "own"
+                                                       },
+                                          "documents":  {
+                                                            "view":  true,
+                                                            "edit":  false,
+                                                            "scope":  "own"
+                                                        },
+                                          "invoices":  {
+                                                           "view":  true,
+                                                           "edit":  false,
+                                                           "scope":  "own"
+                                                       },
+                                          "conferences":  {
+                                                              "view":  true,
+                                                              "edit":  false,
+                                                              "scope":  "own"
+                                                          },
+                                          "reports":  {
+                                                          "view":  true,
+                                                          "edit":  false,
+                                                          "scope":  "own"
+                                                      },
+                                          "poc":  {
+                                                      "view":  true,
+                                                      "edit":  false,
+                                                      "scope":  "own"
+                                                  }
+                                      },
+                      "pocApprover":  true
+                  }
+              ],
+    "clients":  [
+                    {
+                        "id":  "0kuig5gvmo73vad8",
+                        "name":  "TechnoBuild Inc.",
+                        "industry":  "Construction",
+                        "email":  "info@technobuild.com",
+                        "phone":  "+1 (415) 123-4567",
+                        "website":  "technobuild.com",
+                        "address":  "500 Market St, San Francisco, CA",
+                        "notes":  "Major corporate client",
+                        "ownerId":  "shvmed81mo73vad8",
+                        "createdAt":  1774092148028
+                    },
+                    {
+                        "id":  "7p695d25mo73vad8",
+                        "name":  "IT-Solutions LLC",
+                        "industry":  "IT",
+                        "email":  "contact@itsolutions.com",
+                        "phone":  "+1 (212) 555-0011",
+                        "website":  "itsolutions.com",
+                        "address":  "350 5th Ave, New York, NY",
+                        "notes":  "",
+                        "ownerId":  "shvmed81mo73vad8",
+                        "createdAt":  1775388148028
+                    },
+                    {
+                        "id":  "uj850wi6mo73vad8",
+                        "name":  "Health First Medical",
+                        "industry":  "Healthcare",
+                        "email":  "hr@healthfirst.com",
+                        "phone":  "+1 (310) 700-8090",
+                        "website":  "healthfirst.com",
+                        "address":  "1200 Wilshire Blvd, Los Angeles, CA",
+                        "notes":  "Recurring client",
+                        "ownerId":  "shvmed81mo73vad8",
+                        "createdAt":  1771500148028
+                    },
+                    {
+                        "id":  "zgjxfwj8mo73vad8",
+                        "name":  "EcoMart Retail",
+                        "industry":  "Retail",
+                        "email":  "sales@ecomart.io",
+                        "phone":  "+1 (800) 100-2030",
+                        "website":  "ecomart.io",
+                        "address":  "800 Congress Ave, Austin, TX",
+                        "notes":  "",
+                        "ownerId":  "shvmed81mo73vad8",
+                        "createdAt":  1776252148028
+                    }
+                ],
+    "contacts":  [
+                     {
+                         "id":  "d5eaiq63mo73vad8",
+                         "name":  "John Peterson",
+                         "role":  "CEO",
+                         "clientId":  "0kuig5gvmo73vad8",
+                         "email":  "j.peterson@technobuild.com",
+                         "phone":  "+1 (415) 111-2233",
+                         "notes":  "Primary contact",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1774264948028
+                     },
+                     {
+                         "id":  "bu0se5r2mo73vad8",
+                         "name":  "Olivia Smith",
+                         "role":  "CTO",
+                         "clientId":  "7p695d25mo73vad8",
+                         "email":  "o.smith@itsolutions.com",
+                         "phone":  "+1 (212) 456-7890",
+                         "notes":  "",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1775474548028
+                     },
+                     {
+                         "id":  "whwoh31ymo73vad8",
+                         "name":  "Maria Jones",
+                         "role":  "Director",
+                         "clientId":  "uj850wi6mo73vad8",
+                         "email":  "maria@healthfirst.com",
+                         "phone":  "+1 (310) 555-4433",
+                         "notes":  "",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1772364148028
+                     },
+                     {
+                         "id":  "oir7ypy4mo73vad8",
+                         "name":  "Alex Brown",
+                         "role":  "Procurement",
+                         "clientId":  "zgjxfwj8mo73vad8",
+                         "email":  "a.brown@ecomart.io",
+                         "phone":  "+1 (800) 222-3344",
+                         "notes":  "",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1776338548028
+                     }
+                 ],
+    "projects":  [
+                     {
+                         "id":  "ecc07mfzmo73vad8",
+                         "title":  "ERP System Implementation",
+                         "clientId":  "0kuig5gvmo73vad8",
+                         "stage":  "negotiation",
+                         "status":  "in_progress",
+                         "amount":  180000,
+                         "probability":  70,
+                         "startDate":  "2026-04-10",
+                         "dueDate":  "2026-05-20",
+                         "notes":  "Needs SAP integration",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1774956148028
+                     },
+                     {
+                         "id":  "sn66gq4xmo73vad8",
+                         "title":  "Mobile Application Development",
+                         "clientId":  "7p695d25mo73vad8",
+                         "stage":  "qualified",
+                         "status":  "in_progress",
+                         "amount":  95000,
+                         "probability":  50,
+                         "startDate":  "2026-04-15",
+                         "dueDate":  "2026-06-19",
+                         "notes":  "",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1775820148028
+                     },
+                     {
+                         "id":  "ag5x8vpomo73vad8",
+                         "title":  "Website Modernization",
+                         "clientId":  "uj850wi6mo73vad8",
+                         "stage":  "won",
+                         "status":  "won",
+                         "amount":  42000,
+                         "probability":  100,
+                         "startDate":  "2026-03-06",
+                         "dueDate":  "2026-04-10",
+                         "notes":  "Closed successfully",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1771932148028
+                     },
+                     {
+                         "id":  "ntuwzr2vmo73vad8",
+                         "title":  "CRM Integration",
+                         "clientId":  "zgjxfwj8mo73vad8",
+                         "stage":  "proposal",
+                         "status":  "in_progress",
+                         "amount":  68000,
+                         "probability":  30,
+                         "startDate":  "2026-04-18",
+                         "dueDate":  "2026-06-04",
+                         "notes":  "",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1776424948028
+                     },
+                     {
+                         "id":  "vqg31cz0mo73vad8",
+                         "title":  "Software Supply Tender",
+                         "clientId":  "0kuig5gvmo73vad8",
+                         "stage":  "test1",
+                         "status":  "in_progress",
+                         "amount":  250000,
+                         "probability":  20,
+                         "startDate":  "2026-04-20",
+                         "dueDate":  "2026-07-19",
+                         "notes":  "",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1776597748028
+                     },
+                     {
+                         "id":  "wtqmmco7mo73vad8",
+                         "title":  "Employee Portal",
+                         "clientId":  "7p695d25mo73vad8",
+                         "stage":  "won",
+                         "status":  "lost",
+                         "amount":  35000,
+                         "probability":  0,
+                         "startDate":  "2026-01-20",
+                         "dueDate":  "2026-03-21",
+                         "notes":  "Client chose a competitor",
+                         "ownerId":  "shvmed81mo73vad8",
+                         "createdAt":  1768476148028
+                     }
+                 ],
+    "tasks":  [
+                  {
+                      "id":  "gofvd7axmo73vad8",
+                      "title":  "Call John Peterson",
+                      "done":  false,
+                      "dueDate":  "2026-04-21",
+                      "projectId":  "ecc07mfzmo73vad8",
+                      "ownerId":  "shvmed81mo73vad8",
+                      "createdAt":  1776684148028
+                  },
+                  {
+                      "id":  "449kt8qkmo73vad8",
+                      "title":  "Prepare commercial proposal",
+                      "done":  false,
+                      "dueDate":  "2026-04-23",
+                      "projectId":  "sn66gq4xmo73vad8",
+                      "ownerId":  "shvmed81mo73vad8",
+                      "createdAt":  1776684148028
+                  },
+                  {
+                      "id":  "zbmnfxitmo73vad8",
+                      "title":  "Send invoice",
+                      "done":  true,
+                      "dueDate":  "2026-04-18",
+                      "projectId":  "ag5x8vpomo73vad8",
+                      "ownerId":  "shvmed81mo73vad8",
+                      "createdAt":  1776252148028
+                  },
+                  {
+                      "id":  "qr0xwnrzmo73vad8",
+                      "title":  "Team meeting",
+                      "done":  false,
+                      "dueDate":  "2026-04-19",
+                      "projectId":  null,
+                      "ownerId":  "shvmed81mo73vad8",
+                      "createdAt":  1776684148028
+                  }
+              ],
+    "calendarEvents":  [
+                           {
+                               "id":  "wck3fyvqmo73vad8",
+                               "title":  "Kickoff call with TechnoBuild",
+                               "type":  "meeting",
+                               "date":  "2026-04-21",
+                               "time":  "10:00",
+                               "projectId":  "ecc07mfzmo73vad8",
+                               "notes":  "Review scope and next milestone.",
+                               "createdAt":  1776511348028,
+                               "ownerId":  "shvmed81mo73vad8"
+                           },
+                           {
+                               "id":  "lihbzrfdmo73vad8",
+                               "title":  "Proposal review for IT-Solutions",
+                               "type":  "deadline",
+                               "date":  "2026-04-23",
+                               "time":  "15:30",
+                               "projectId":  "sn66gq4xmo73vad8",
+                               "notes":  "Finalize budget and delivery dates.",
+                               "createdAt":  1776597748028,
+                               "ownerId":  "shvmed81mo73vad8"
+                           },
+                           {
+                               "id":  "4ucy93simo73vad8",
+                               "title":  "Contract sync with EcoMart",
+                               "type":  "call",
+                               "date":  "2026-04-26",
+                               "time":  "12:00",
+                               "projectId":  "ntuwzr2vmo73vad8",
+                               "notes":  "Confirm procurement workflow.",
+                               "createdAt":  1776684148028,
+                               "ownerId":  "shvmed81mo73vad8"
+                           },
+                           {
+                               "id":  "v0uxqelxmo73vad8",
+                               "title":  "Internal delivery review",
+                               "type":  "internal",
+                               "date":  "2026-04-28",
+                               "time":  "09:30",
+                               "projectId":  "",
+                               "notes":  "Check pipeline load and overdue tasks.",
+                               "createdAt":  1776684148028,
+                               "ownerId":  "shvmed81mo73vad8"
+                           }
+                       ],
+    "documents":  [
+                      {
+                          "id":  "ensqgma3mo73vad8",
+                          "title":  "TechnoBuild commercial proposal",
+                          "category":  "proposal",
+                          "clientId":  "0kuig5gvmo73vad8",
+                          "projectId":  "ecc07mfzmo73vad8",
+                          "status":  "sent",
+                          "reference":  "TB-CP-2026-04",
+                          "link":  "",
+                          "notes":  "Sent after first negotiation round.",
+                          "attachments":  [
+
+                                          ],
+                          "updatedAt":  1776338548028,
+                          "ownerId":  "shvmed81mo73vad8"
+                      },
+                      {
+                          "id":  "mtr8ydxymo73vad8",
+                          "title":  "IT-Solutions scope draft",
+                          "category":  "brief",
+                          "clientId":  "7p695d25mo73vad8",
+                          "projectId":  "sn66gq4xmo73vad8",
+                          "status":  "draft",
+                          "reference":  "ITS-BRIEF-01",
+                          "link":  "",
+                          "notes":  "Waiting for product feedback.",
+                          "attachments":  [
+
+                                          ],
+                          "updatedAt":  1776511348028,
+                          "ownerId":  "shvmed81mo73vad8"
+                      },
+                      {
+                          "id":  "qvwepjivmo73vad8",
+                          "title":  "Health First signed contract",
+                          "category":  "contract",
+                          "clientId":  "uj850wi6mo73vad8",
+                          "projectId":  "ag5x8vpomo73vad8",
+                          "status":  "signed",
+                          "reference":  "HFM-CONTRACT",
+                          "link":  "",
+                          "notes":  "Master services agreement signed.",
+                          "attachments":  [
+
+                                          ],
+                          "updatedAt":  1775647348028,
+                          "ownerId":  "shvmed81mo73vad8"
+                      },
+                      {
+                          "id":  "hp3az347mo73vad8",
+                          "title":  "EcoMart implementation checklist",
+                          "category":  "act",
+                          "clientId":  "zgjxfwj8mo73vad8",
+                          "projectId":  "ntuwzr2vmo73vad8",
+                          "status":  "review",
+                          "reference":  "EM-CHECK-07",
+                          "link":  "",
+                          "notes":  "Internal review before approval.",
+                          "attachments":  [
+
+                                          ],
+                          "updatedAt":  1776597748028,
+                          "ownerId":  "shvmed81mo73vad8"
+                      }
+                  ],
+    "invoices":  [
+                     {
+                         "id":  "fzagrxf5mo73vad8",
+                         "number":  "INV-2026-001",
+                         "clientId":  "0kuig5gvmo73vad8",
+                         "projectId":  "ecc07mfzmo73vad8",
+                         "issueDate":  "2026-04-06",
+                         "dueDate":  "2026-04-27",
+                         "amount":  32000,
+                         "paidAmount":  12000,
+                         "status":  "sent",
+                         "notes":  "Phase 1 advance payment.",
+                         "createdAt":  1775474548028,
+                         "ownerId":  "shvmed81mo73vad8"
+                     },
+                     {
+                         "id":  "41d92hgomo73vad8",
+                         "number":  "INV-2026-002",
+                         "clientId":  "7p695d25mo73vad8",
+                         "projectId":  "sn66gq4xmo73vad8",
+                         "issueDate":  "2026-04-16",
+                         "dueDate":  "2026-04-30",
+                         "amount":  18000,
+                         "paidAmount":  0,
+                         "status":  "draft",
+                         "notes":  "Awaiting proposal approval.",
+                         "createdAt":  1776338548028,
+                         "ownerId":  "shvmed81mo73vad8"
+                     },
+                     {
+                         "id":  "566j8tsbmo73vad8",
+                         "number":  "INV-2026-003",
+                         "clientId":  "uj850wi6mo73vad8",
+                         "projectId":  "ag5x8vpomo73vad8",
+                         "issueDate":  "2026-03-21",
+                         "dueDate":  "2026-04-10",
+                         "amount":  42000,
+                         "paidAmount":  42000,
+                         "status":  "paid",
+                         "notes":  "Project fully closed.",
+                         "createdAt":  1774092148028,
+                         "ownerId":  "shvmed81mo73vad8"
+                     },
+                     {
+                         "id":  "ab6mstebmo73vad8",
+                         "number":  "INV-2026-004",
+                         "clientId":  "zgjxfwj8mo73vad8",
+                         "projectId":  "ntuwzr2vmo73vad8",
+                         "issueDate":  "2026-03-31",
+                         "dueDate":  "2026-04-17",
+                         "amount":  15000,
+                         "paidAmount":  0,
+                         "status":  "sent",
+                         "notes":  "Reminder required.",
+                         "createdAt":  1774956148028,
+                         "ownerId":  "shvmed81mo73vad8"
+                     }
+                 ],
+    "conferences":  [
+                        {
+                            "id":  "jbi7jzermo73vad8",
+                            "title":  "Digital Enterprise Expo 2026",
+                            "country":  "Germany",
+                            "city":  "Berlin",
+                            "venue":  "Messe Berlin",
+                            "organizer":  "TechEvents Europe",
+                            "startDate":  "2026-05-08",
+                            "endDate":  "2026-05-11",
+                            "budget":  8600,
+                            "status":  "planned",
+                            "notes":  "Need to prepare printed decks and coordinate booth branding.",
+                            "createdAt":  1776338548028,
+                            "ownerId":  "shvmed81mo73vad8",
+                            "participants":  [
+                                                 {
+                                                     "id":  "kf61d6vumo73vad8",
+                                                     "userId":  "shvmed81mo73vad8",
+                                                     "role":  "Speaker / BD lead",
+                                                     "startDate":  "2026-05-07",
+                                                     "endDate":  "2026-05-12",
+                                                     "notes":  "Responsible for partner meetings and keynote slot.",
+                                                     "expenses":  [
+                                                                      {
+                                                                          "id":  "rl74u1jomo73vad8",
+                                                                          "category":  "flight",
+                                                                          "title":  "Round-trip flight Tashkent - Berlin",
+                                                                          "amount":  1120,
+                                                                          "date":  "2026-05-07",
+                                                                          "notes":  "Estimated ticket price",
+                                                                          "conferenceId":  "jbi7jzermo73vad8",
+                                                                          "participantId":  "kf61d6vumo73vad8",
+                                                                          "userId":  "shvmed81mo73vad8",
+                                                                          "createdAt":  1776684148028
+                                                                      },
+                                                                      {
+                                                                          "id":  "aofxy1hvmo73vad8",
+                                                                          "category":  "hotel",
+                                                                          "title":  "Hotel near venue",
+                                                                          "amount":  1800,
+                                                                          "date":  "2026-05-08",
+                                                                          "notes":  "5 nights estimate",
+                                                                          "conferenceId":  "jbi7jzermo73vad8",
+                                                                          "participantId":  "kf61d6vumo73vad8",
+                                                                          "userId":  "shvmed81mo73vad8",
+                                                                          "createdAt":  1776684148028
+                                                                      }
+                                                                  ]
+                                                 }
+                                             ]
+                        },
+                        {
+                            "id":  "l5dephzzmo73vad8",
+                            "title":  "Central Asia Business Forum",
+                            "country":  "Uzbekistan",
+                            "city":  "Tashkent",
+                            "venue":  "International Congress Hall",
+                            "organizer":  "CA Business Council",
+                            "startDate":  "2026-03-16",
+                            "endDate":  "2026-03-18",
+                            "budget":  2400,
+                            "status":  "attended",
+                            "notes":  "Strong lead flow from regional enterprise buyers.",
+                            "createdAt":  1772364148028,
+                            "ownerId":  "shvmed81mo73vad8",
+                            "participants":  [
+                                                 {
+                                                     "id":  "4ck593icmo73vad8",
+                                                     "userId":  "shvmed81mo73vad8",
+                                                     "role":  "Company representative",
+                                                     "startDate":  "2026-03-16",
+                                                     "endDate":  "2026-03-18",
+                                                     "notes":  "",
+                                                     "expenses":  [
+                                                                      {
+                                                                          "id":  "0zo8snthmo73vad8",
+                                                                          "category":  "taxi",
+                                                                          "title":  "Airport and venue transfers",
+                                                                          "amount":  80,
+                                                                          "date":  "2026-03-16",
+                                                                          "notes":  "",
+                                                                          "conferenceId":  "l5dephzzmo73vad8",
+                                                                          "participantId":  "4ck593icmo73vad8",
+                                                                          "userId":  "shvmed81mo73vad8",
+                                                                          "createdAt":  1776684148028
+                                                                      },
+                                                                      {
+                                                                          "id":  "fo5t4ptdmo73vad8",
+                                                                          "category":  "food",
+                                                                          "title":  "Meals during event",
+                                                                          "amount":  65,
+                                                                          "date":  "2026-03-17",
+                                                                          "notes":  "",
+                                                                          "conferenceId":  "l5dephzzmo73vad8",
+                                                                          "participantId":  "4ck593icmo73vad8",
+                                                                          "userId":  "shvmed81mo73vad8",
+                                                                          "createdAt":  1776684148028
+                                                                      },
+                                                                      {
+                                                                          "id":  "etp7it2wmo73vad8",
+                                                                          "category":  "other",
+                                                                          "title":  "Conference badge and materials",
+                                                                          "amount":  320,
+                                                                          "date":  "2026-03-16",
+                                                                          "notes":  "",
+                                                                          "conferenceId":  "l5dephzzmo73vad8",
+                                                                          "participantId":  "4ck593icmo73vad8",
+                                                                          "userId":  "shvmed81mo73vad8",
+                                                                          "createdAt":  1776684148028
+                                                                      }
+                                                                  ]
+                                                 }
+                                             ]
+                        }
+                    ],
+    "activity":  [
+                     {
+                         "id":  "82i2kefimo7qxm7d",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ„Ñ‹Ð²Ñ„Ñ‹Ð²\u003c/strong\u003e submitted for approval",
+                         "at":  1776722887849
+                     },
+                     {
+                         "id":  "h323ekcbmo7qtfvy",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003efffff\u003c/strong\u003e submitted for approval",
+                         "at":  1776722693038
+                     },
+                     {
+                         "id":  "02p3jp13mo7qrl5a",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ‹Ð²Ñ‹Ð²Ñ‹Ð²\u003c/strong\u003e submitted for approval",
+                         "at":  1776722606542
+                     },
+                     {
+                         "id":  "3nmdtd1emo7qoz16",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003easdasd\u003c/strong\u003e submitted for approval",
+                         "at":  1776722484571
+                     },
+                     {
+                         "id":  "o2un142tmo7qkjgd",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003easdasdasd\u003c/strong\u003e submitted for approval",
+                         "at":  1776722277757
+                     },
+                     {
+                         "id":  "05fhztjxmo7qjtke",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ‹Ð²Ð°Ñ‹Ð²Ð°Ñ‹\u003c/strong\u003e submitted for approval",
+                         "at":  1776722244206
+                     },
+                     {
+                         "id":  "fmyhp87tmo7qj24m",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÐºÑƒÐµÑƒÐºÐµÑƒÐºÐµÑƒÐºÐµÑƒÑƒ\u003c/strong\u003e submitted for approval",
+                         "at":  1776722208646
+                     },
+                     {
+                         "id":  "6wj4pgfzmo7qas1u",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ‹Ð²Ñ‹Ð²Ñ‹Ð²\u003c/strong\u003e rejected",
+                         "at":  1776721822338
+                     },
+                     {
+                         "id":  "hbtpwsy4mo7q9adm",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ‹Ð²Ñ‹Ð²Ñ‹Ð²\u003c/strong\u003e submitted for approval",
+                         "at":  1776721752778
+                     },
+                     {
+                         "id":  "32ad9d3kmo7q2e0q",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eqweqwe\u003c/strong\u003e submitted for approval",
+                         "at":  1776721430906
+                     },
+                     {
+                         "id":  "m6gicthpmo7q28ff",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eadqweqwe\u003c/strong\u003e submitted for approval",
+                         "at":  1776721423659
+                     },
+                     {
+                         "id":  "01yc13lvmo7puaz3",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ†ÑƒÐºÑ†ÐºÑƒÑ†ÑƒÐº\u003c/strong\u003e submitted for approval",
+                         "at":  1776721053711
+                     },
+                     {
+                         "id":  "duzv7xa9mo7pu61z",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003e3225235\u003c/strong\u003e submitted for approval",
+                         "at":  1776721047336
+                     },
+                     {
+                         "id":  "ux690uw7mo7ptn62",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003eÑ„Ñ‹Ð²Ñ„Ñ‹Ð²\u003c/strong\u003e submitted for approval",
+                         "at":  1776721022858
+                     },
+                     {
+                         "id":  "ws74oqdumo7pqnpu",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003esdfsdf\u003c/strong\u003e submitted for approval",
+                         "at":  1776720883602
+                     },
+                     {
+                         "id":  "4pcv2hftmo7ppjyj",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003e234535\u003c/strong\u003e submitted for approval",
+                         "at":  1776720832075
+                     },
+                     {
+                         "id":  "jiv49yo8mo7pog2m",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003e3434\u003c/strong\u003e rejected",
+                         "at":  1776720780382
+                     },
+                     {
+                         "id":  "m2b6fehfmo7pacue",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003e3434\u003c/strong\u003e submitted for approval",
+                         "at":  1776720123014
+                     },
+                     {
+                         "id":  "cm8ccubomo7pa7vo",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003etest\u003c/strong\u003e rejected",
+                         "at":  1776720116581
+                     },
+                     {
+                         "id":  "e9ytph4pmo7p8ygs",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003etest\u003c/strong\u003e submitted for approval",
+                         "at":  1776720057724
+                     },
+                     {
+                         "id":  "2llc0m8zmo7p8a0q",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003etest\u003c/strong\u003e rejected",
+                         "at":  1776720026042
+                     },
+                     {
+                         "id":  "kmojhs3amo7p7r6x",
+                         "type":  "poc",
+                         "text":  "POC \u003cstrong\u003etest\u003c/strong\u003e submitted for approval",
+                         "at":  1776720001641
+                     },
+                     {
+                         "id":  "86k5c1tlmo7ogquo",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776718741488
+                     },
+                     {
+                         "id":  "6whbfz2xmo7ogn6e",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776718736726
+                     },
+                     {
+                         "id":  "vouz4r5vmo7o0zgc",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776718006140
+                     },
+                     {
+                         "id":  "cnlm17gymo7o0hni",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776717983070
+                     },
+                     {
+                         "id":  "1twi7hlomo7ns0nd",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776717587785
+                     },
+                     {
+                         "id":  "zp2a7my2mo7nqhxg",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776717516868
+                     },
+                     {
+                         "id":  "syurjw01mo7nir2v",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776717155479
+                     },
+                     {
+                         "id":  "wuie6totmo7nidhm",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776717137866
+                     },
+                     {
+                         "id":  "2pf3l7n2mo7ni4zt",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776717126857
+                     },
+                     {
+                         "id":  "sndt4nn1mo7ni0v1",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776717121501
+                     },
+                     {
+                         "id":  "qexaihq1mo7nfntj",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776717011287
+                     },
+                     {
+                         "id":  "g8xbdv9tmo7nez05",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776716979125
+                     },
+                     {
+                         "id":  "v7f6ua87mo7new8x",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716975553
+                     },
+                     {
+                         "id":  "bu7of4armo7ned8w",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716950928
+                     },
+                     {
+                         "id":  "z2xtzzoemo7ne9f2",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776716945966
+                     },
+                     {
+                         "id":  "p0on7magmo7ne2w4",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776716937508
+                     },
+                     {
+                         "id":  "hz6dme2xmo7ne01j",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716933815
+                     },
+                     {
+                         "id":  "iypx58a4mo7nct0g",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716878048
+                     },
+                     {
+                         "id":  "5i9et7lrmo7ncq5n",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776716874347
+                     },
+                     {
+                         "id":  "kwp9w1jomo7ncadt",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e",
+                         "at":  1776716853905
+                     },
+                     {
+                         "id":  "cbfgfdd0mo7nc75i",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716849718
+                     },
+                     {
+                         "id":  "z81vmom6mo7nc57l",
+                         "type":  "auth",
+                         "text":  "Employee \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e updated",
+                         "at":  1776716847201
+                     },
+                     {
+                         "id":  "p8b5575gmo7nbc4h",
+                         "type":  "auth",
+                         "text":  "Employee \u003cstrong\u003eJafar Baghirov\u003c/strong\u003e added",
+                         "at":  1776716809505
+                     },
+                     {
+                         "id":  "wlgpof28mo7nabjy",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716762110
+                     },
+                     {
+                         "id":  "r4dwlyscmo7n2yc8",
+                         "type":  "auth",
+                         "text":  "Logout: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776716418392
+                     },
+                     {
+                         "id":  "tcgl86b9mo7mlut5",
+                         "type":  "project",
+                         "text":  "Project \u003cstrong\u003eMobile Application Development\u003c/strong\u003e moved to \"ÐšÐ²Ð°Ð»Ð¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ñ\"",
+                         "at":  1776715620665
+                     },
+                     {
+                         "id":  "wmpapc0umo7mltif",
+                         "type":  "project",
+                         "text":  "Project \u003cstrong\u003eMobile Application Development\u003c/strong\u003e moved to \"stage.dwqqwd\"",
+                         "at":  1776715618983
+                     },
+                     {
+                         "id":  "togeq8b4mo7m68jp",
+                         "type":  "project",
+                         "text":  "Project \u003cstrong\u003eCRM Integration\u003c/strong\u003e moved to \"Proposal\"",
+                         "at":  1776714891973
+                     },
+                     {
+                         "id":  "6vlfpc3qmo7m682o",
+                         "type":  "project",
+                         "text":  "Project \u003cstrong\u003eMobile Application Development\u003c/strong\u003e moved to \"Qualified\"",
+                         "at":  1776714891360
+                     },
+                     {
+                         "id":  "jo3237wqmo73zu5h",
+                         "type":  "auth",
+                         "text":  "Login: \u003cstrong\u003eAdmin Soteryan\u003c/strong\u003e",
+                         "at":  1776684360293
+                     },
+                     {
+                         "id":  "ss64d3atmo73vad8",
+                         "type":  "project",
+                         "text":  "Project \u003cstrong\u003eERP System Implementation\u003c/strong\u003e created",
+                         "at":  1774956148028
+                     },
+                     {
+                         "id":  "3ytnpw1vmo73vad8",
+                         "type":  "client",
+                         "text":  "Client \u003cstrong\u003eEcoMart Retail\u003c/strong\u003e added",
+                         "at":  1776252148028
+                     },
+                     {
+                         "id":  "4hkbi0x7mo73vad8",
+                         "type":  "project",
+                         "text":  "Project \u003cstrong\u003eWebsite Modernization\u003c/strong\u003e closed as won",
+                         "at":  1775820148028
+                     },
+                     {
+                         "id":  "i46778lymo73vad8",
+                         "type":  "task",
+                         "text":  "Task \u003cstrong\u003ePrepare commercial proposal\u003c/strong\u003e created",
+                         "at":  1776511348028
+                     },
+                     {
+                         "id":  "u8sj0ylemo73vad8",
+                         "type":  "invoice",
+                         "text":  "Invoice \u003cstrong\u003eINV-2026-001\u003c/strong\u003e issued for \u003cstrong\u003eTechnoBuild Inc.\u003c/strong\u003e",
+                         "at":  1775474548028
+                     },
+                     {
+                         "id":  "szolvj3pmo73vad8",
+                         "type":  "document",
+                         "text":  "Document \u003cstrong\u003eHealth First signed contract\u003c/strong\u003e marked as signed",
+                         "at":  1775647348028
+                     },
+                     {
+                         "id":  "8vy34aiymo73vad8",
+                         "type":  "conference",
+                         "text":  "Conference \u003cstrong\u003eDigital Enterprise Expo 2026\u003c/strong\u003e added to event plan",
+                         "at":  1776338548028
+                     }
+                 ],
+    "stages":  [
+                   {
+                       "id":  "test1",
+                       "nameKey":  "stage.new",
+                       "customName":  "Test1"
+                   },
+                   {
+                       "id":  "qualified",
+                       "nameKey":  "stage.qualified",
+                       "customName":  "Qualified 234234"
+                   },
+                   {
+                       "id":  "proposal",
+                       "nameKey":  "stage.proposal"
+                   },
+                   {
+                       "id":  "negotiation",
+                       "nameKey":  "stage.negotiation"
+                   },
+                   {
+                       "id":  "won",
+                       "nameKey":  "stage.won"
+                   }
+               ],
+    "pocs":  [
+                 {
+                     "id":  "wyklqjvjmo7qxm7d",
+                     "title":  "Ñ„Ñ‹Ð²Ñ„Ñ‹Ð²",
+                     "dealId":  "sn66gq4xmo73vad8",
+                     "accountId":  "7p695d25mo73vad8",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "Ñ„Ñ‹Ð²Ñ„Ñ‹Ð²",
+                     "notifyUserIds":  [
+
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722887849,
+                     "submittedAt":  1776722887849,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 },
+                 {
+                     "id":  "t0xdxa96mo7qtfvy",
+                     "title":  "fffff",
+                     "dealId":  "sn66gq4xmo73vad8",
+                     "accountId":  "7p695d25mo73vad8",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "sds",
+                     "notifyUserIds":  [
+
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722693038,
+                     "submittedAt":  1776722693038,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 },
+                 {
+                     "id":  "4843u2ajmo7qrl5a",
+                     "title":  "Ñ‹Ð²Ñ‹Ð²Ñ‹Ð²",
+                     "dealId":  "sn66gq4xmo73vad8",
+                     "accountId":  "0kuig5gvmo73vad8",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "Ñ‹Ð²Ñ‹Ð²Ñ‹Ð²",
+                     "notifyUserIds":  [
+
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722606542,
+                     "submittedAt":  1776722606542,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 },
+                 {
+                     "id":  "ve98hcs6mo7qoz16",
+                     "title":  "asdasd",
+                     "dealId":  "sn66gq4xmo73vad8",
+                     "accountId":  "",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "adasd",
+                     "notifyUserIds":  [
+
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722484570,
+                     "submittedAt":  1776722484570,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 },
+                 {
+                     "id":  "k34o1xk8mo7qkjgd",
+                     "title":  "asdasdasd",
+                     "dealId":  "ag5x8vpomo73vad8",
+                     "accountId":  "7p695d25mo73vad8",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "",
+                     "notifyUserIds":  [
+
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722277757,
+                     "submittedAt":  1776722277757,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 },
+                 {
+                     "id":  "9qo9zcj4mo7qjtke",
+                     "title":  "Ñ‹Ð²Ð°Ñ‹Ð²Ð°Ñ‹",
+                     "dealId":  "ecc07mfzmo73vad8",
+                     "accountId":  "7p695d25mo73vad8",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "Ñ‹Ð²Ð°Ñ‹Ð²Ð°",
+                     "notifyUserIds":  [
+                                           "w5kutqsomo7nbc4h"
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722244206,
+                     "submittedAt":  1776722244206,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 },
+                 {
+                     "id":  "bwp0f1iymo7qj24m",
+                     "title":  "ÐºÑƒÐµÑƒÐºÐµÑƒÐºÐµÑƒÐºÐµÑƒÑƒ",
+                     "dealId":  "ecc07mfzmo73vad8",
+                     "accountId":  "7p695d25mo73vad8",
+                     "pendingAccountName":  "",
+                     "partnerUserId":  "shvmed81mo73vad8",
+                     "durationDays":  1,
+                     "startDate":  "2026-04-20",
+                     "endDate":  "2026-04-21",
+                     "notes":  "ÑƒÐºÐµÑƒÐºÐµÑƒ",
+                     "notifyUserIds":  [
+
+                                       ],
+                     "status":  "pending_approval",
+                     "files":  [
+
+                               ],
+                     "createdAt":  1776722208646,
+                     "submittedAt":  1776722208646,
+                     "approvedAt":  null,
+                     "completedAt":  null,
+                     "rejectionReason":  ""
+                 }
+             ],
+    "accountGroups":  [
+                          {
+                              "id":  "9q0sj6dumo7nbrob",
+                              "name":  "test",
+                              "description":  "tet",
+                              "memberUserIds":  [
+                                                    "w5kutqsomo7nbc4h"
+                                                ],
+                              "accountIds":  [
+                                                 "0kuig5gvmo73vad8",
+                                                 "7p695d25mo73vad8"
+                                             ]
+                          }
+                      ]
+}
