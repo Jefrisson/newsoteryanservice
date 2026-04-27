@@ -459,15 +459,8 @@ function detectSchema(records){
    DATA LOADING
    ============================================================ */
 async function loadDefault(){
- try {
-   const r = await fetch('data.json');
-   if (!r.ok) throw new Error('not found');
-   const j = await r.json();
-   ingestJSON(j, 'data.json');
-   toast('success','Loaded','data.json from project root');
- } catch(e){
-   showWelcome();
- }
+ // No auto-load. The app waits for the user to drop their own JSON.
+ showWelcome();
 }
 
 function ingestJSON(j, sourceName){
@@ -846,10 +839,6 @@ function showWelcome(){
      <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
        Upload JSON
-     </button>
-     <button class="btn-ghost" onclick="loadDefault()">
-       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
-       Load sample dataset
      </button>
    </div>
    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
