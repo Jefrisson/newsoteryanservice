@@ -10,43 +10,42 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Open Sans',system-ui,-apple-system,sans-serif;background:#080a0d;color:#e2e8f0;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:7px;height:7px}
+html,body{height:100%}
+body{font-family:'Open Sans',system-ui,-apple-system,sans-serif;background:#080a0d;color:#e8eaed;overflow:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:10px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(220,85,42,.45)}
 :root{
-  --red:#950f18;--orange:#DC552A;--orange-soft:rgba(220,85,42,.12);
+  --red:#950f18;--orange:#DC552A;--orange-2:#fb7a4a;
   --bg:#080a0d;--bg1:#0d1015;--bg2:#111318;--bg3:#161a22;--bg4:#1c212c;
-  --border:rgba(255,255,255,.06);--border-strong:rgba(255,255,255,.1);
-  --border-accent:rgba(220,85,42,.28);
-  --text:#e8eaed;--text2:#9ba3ae;--text3:#5f6772;
+  --border:rgba(255,255,255,.06);--border-2:rgba(255,255,255,.1);--accent:rgba(220,85,42,.28);
+  --text:#e8eaed;--text2:#9ba3ae;--text3:#5f6772;--text4:#3d434c;
   --green:#22c55e;--yellow:#f59e0b;--blue:#60a5fa;--purple:#a78bfa;--rose:#f87171;--pink:#f472b6;--cyan:#22d3ee;
 }
 button{font-family:inherit;border:0;background:transparent;cursor:pointer;color:inherit}
 input,select{font-family:inherit;color:inherit}
+mark{background:rgba(245,158,11,.35);color:#fde68a;border-radius:2px;padding:0 2px}
 
 /* APP LAYOUT */
-.app{display:flex;min-height:100vh}
-.sidebar{width:280px;height:100vh;position:fixed;left:0;top:0;background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1)}
-.sidebar-logo{padding:20px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
-.logo-wrap{display:flex;align-items:center;gap:11px}
-.logo-shield{width:38px;height:38px;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(220,85,42,.3));transition:transform .3s}
-.logo-wrap:hover .logo-shield{transform:scale(1.08) rotate(-3deg)}
+.app{display:grid;grid-template-columns:260px 1fr;height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;min-width:0;overflow:hidden;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sidebar-logo{padding:18px 18px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-shield{width:34px;height:34px;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(220,85,42,.3))}
 .logo-text{display:flex;flex-direction:column;line-height:1}
-.logo-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--text);letter-spacing:.02em}
+.logo-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14.5px;color:var(--text);letter-spacing:.01em}
 .logo-sub{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-top:4px}
 .sidebar-scroll{flex:1;overflow-y:auto;padding:6px 0 14px}
-
-.side-section{padding:14px 18px 8px}
-.side-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.side-section{padding:12px 16px 6px}
+.side-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .side-section-title{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text3)}
 .side-section-action{font-size:10px;color:var(--orange);font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
 .side-section-action:hover{text-decoration:underline}
 
-/* DATASET PICKER */
-.ds-pick{display:flex;flex-direction:column;gap:3px}
+.ds-pick{display:flex;flex-direction:column;gap:2px}
 .ds-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;transition:all .15s;font-size:12.5px;color:var(--text2);font-family:'Space Grotesk',sans-serif;font-weight:500}
 .ds-item:hover{background:rgba(255,255,255,.03);color:var(--text)}
 .ds-item.active{background:rgba(220,85,42,.1);color:var(--text);box-shadow:inset 2px 0 0 var(--orange)}
@@ -54,12 +53,12 @@ input,select{font-family:inherit;color:inherit}
 .ds-count{font-size:10px;color:var(--text3);font-weight:600;background:rgba(255,255,255,.05);padding:1px 6px;border-radius:100px}
 .ds-item.active .ds-count{background:rgba(220,85,42,.2);color:var(--orange)}
 
-/* FIELD LIST */
 .field-list{display:flex;flex-direction:column;gap:1px}
-.field-row{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer;transition:all .15s;color:var(--text2);font-size:12.5px}
+.field-row{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer;transition:all .15s;color:var(--text2);font-size:12px}
 .field-row:hover{background:rgba(255,255,255,.03);color:var(--text)}
 .field-row.has-filter{background:rgba(220,85,42,.08)}
-.type-pill{font-size:8.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:4px;font-family:'Space Grotesk',sans-serif;flex-shrink:0;min-width:38px;text-align:center}
+.field-row.expanded{background:rgba(220,85,42,.06)}
+.type-pill{font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:1px 5px;border-radius:4px;font-family:'Space Grotesk',sans-serif;flex-shrink:0;min-width:34px;text-align:center}
 .t-num{background:rgba(96,165,250,.16);color:#60a5fa}
 .t-cat{background:rgba(167,139,250,.16);color:#a78bfa}
 .t-str{background:rgba(148,163,184,.13);color:#94a3b8}
@@ -68,231 +67,219 @@ input,select{font-family:inherit;color:inherit}
 .t-obj{background:rgba(220,85,42,.16);color:#fb923c}
 .field-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Space Grotesk',sans-serif;font-weight:500}
 .field-row.has-filter .field-name{color:var(--orange);font-weight:600}
-.field-card{font-size:11px;color:var(--text3);font-weight:600;font-family:'Space Grotesk',sans-serif}
+.field-card-stat{font-size:10.5px;color:var(--text3);font-weight:600;font-family:'Space Grotesk',sans-serif}
 
-/* FILTER CHIPS */
-.filter-chips{display:flex;flex-direction:column;gap:6px}
-.chip{display:flex;align-items:flex-start;gap:6px;padding:7px 9px;background:rgba(220,85,42,.08);border:1px solid rgba(220,85,42,.2);border-radius:8px;font-size:11.5px}
-.chip-content{flex:1;min-width:0}
-.chip-field{font-size:10px;color:var(--orange);font-weight:700;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.06em}
-.chip-value{font-size:11.5px;color:var(--text);margin-top:1px;word-break:break-word;line-height:1.35}
-.chip-x{color:var(--text3);cursor:pointer;flex-shrink:0;width:14px;height:14px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:all .15s}
-.chip-x:hover{background:rgba(248,113,113,.15);color:#f87171}
-.no-filters{font-size:11.5px;color:var(--text3);font-style:italic;padding:6px 2px}
+.filter-edit{padding:9px 11px;background:rgba(220,85,42,.05);border:1px solid rgba(220,85,42,.18);border-radius:8px;margin:5px 10px}
+.fe-row{display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.fe-row:last-child{margin-bottom:0}
+.fe-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none}
+.fe-input:focus{border-color:var(--orange)}
+.fe-list{max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:1px}
+.fe-opt{display:flex;align-items:center;gap:7px;padding:4px 6px;font-size:11.5px;color:var(--text2);cursor:pointer;border-radius:5px;transition:background .12s}
+.fe-opt:hover{background:rgba(255,255,255,.03);color:var(--text)}
+.fe-opt input{width:13px;height:13px;accent-color:var(--orange);flex-shrink:0}
+.fe-opt-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fe-opt-cnt{font-size:10px;color:var(--text3);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.fe-actions{display:flex;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.fe-btn{flex:1;padding:5px 7px;border-radius:6px;font-size:11px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all .15s}
+.fe-btn:hover{border-color:var(--accent);color:var(--text)}
+.fe-btn.primary{background:var(--orange);color:white;border-color:var(--orange)}
+.fe-btn.primary:hover{background:#e26538}
+.range-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 
-.sidebar-footer{padding:12px 18px;border-top:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;gap:6px}
-.foot-btn{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:8px;font-size:12.5px;color:var(--text2);font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:var(--bg2)}
-.foot-btn:hover{border-color:var(--border-accent);color:var(--text);background:var(--bg3)}
+.sidebar-footer{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;gap:6px}
+.foot-btn{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:8px;font-size:12px;color:var(--text2);font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:var(--bg2)}
+.foot-btn:hover{border-color:var(--accent);color:var(--text);background:var(--bg3)}
 .foot-btn svg{width:14px;height:14px;flex-shrink:0}
+.foot-btn.primary{border-color:var(--orange);color:var(--orange);background:rgba(220,85,42,.06)}
+.foot-btn.primary:hover{background:rgba(220,85,42,.12)}
 
 /* MAIN */
-.main{margin-left:280px;flex:1;display:flex;flex-direction:column;min-height:100vh;min-width:0}
-.topbar{height:62px;background:rgba(8,10,13,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;position:sticky;top:0;z-index:50}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.topbar{height:56px;background:rgba(8,10,13,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
 .menu-toggle{cursor:pointer;color:var(--text2);padding:6px;display:none;border-radius:6px}
 .menu-toggle:hover{background:rgba(255,255,255,.05)}
-.title-block{display:flex;flex-direction:column;line-height:1.25}
-.title-block-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
-.title-block-meta{font-size:11.5px;color:var(--text3);margin-top:2px;font-family:'Space Grotesk',sans-serif}
+.title-block{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.title-block-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
+.title-block-meta{font-size:11px;color:var(--text3);margin-top:2px;font-family:'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .title-block-meta strong{color:var(--orange)}
 
-.view-tabs{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--border);padding:4px;border-radius:9px;margin-left:14px}
-.view-tab{padding:7px 14px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--text3);font-family:'Space Grotesk',sans-serif;display:flex;align-items:center;gap:7px;transition:all .15s}
-.view-tab:hover{color:var(--text2)}
-.view-tab.active{background:var(--orange);color:white;box-shadow:0 4px 14px rgba(220,85,42,.3)}
-.view-tab svg{width:13px;height:13px}
-
-.search-wrap{flex:1;max-width:340px;position:relative;margin-left:auto}
-.search-input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:9px 12px 9px 36px;color:var(--text);font-size:13px;outline:none;transition:all .2s}
+.search-wrap{flex:1;max-width:380px;position:relative;margin-left:auto}
+.search-input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px 8px 34px;color:var(--text);font-size:13px;outline:none;transition:all .2s}
 .search-input::placeholder{color:var(--text3)}
 .search-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(220,85,42,.1)}
-.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;width:14px;height:14px}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;width:13px;height:13px}
 .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;padding:2px 6px;border:1px solid var(--border);border-radius:4px;pointer-events:none}
 
-.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;background:var(--orange);color:white;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s;border:0}
+.btn-primary{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;background:var(--orange);color:white;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s}
 .btn-primary:hover{background:#e26538;box-shadow:0 6px 20px rgba(220,85,42,.4);transform:translateY(-1px)}
 .btn-primary svg{width:13px;height:13px}
-.btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;background:var(--bg2);color:var(--text2);border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s;border:1px solid var(--border)}
-.btn-ghost:hover{border-color:var(--border-accent);color:var(--text);background:var(--bg3)}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;background:var(--bg2);color:var(--text2);border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;transition:all .15s;border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text);background:var(--bg3)}
 .btn-ghost svg{width:13px;height:13px}
 
-.live-pill{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:10.5px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;font-family:'Space Grotesk',sans-serif}
+.live-pill{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.08em;font-family:'Space Grotesk',sans-serif}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
 
-.content{flex:1;padding:22px;overflow-y:auto;min-width:0}
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:18px 22px 22px;min-height:0}
 
-/* DROP ZONE */
-.dropzone{position:fixed;inset:0;background:rgba(8,10,13,.92);backdrop-filter:blur(10px);z-index:500;display:none;align-items:center;justify-content:center;padding:40px}
-.dropzone.over{display:flex}
-.dz-inner{border:2px dashed var(--orange);border-radius:18px;padding:60px;text-align:center;background:rgba(220,85,42,.05);max-width:520px}
-.dz-icon{width:60px;height:60px;margin:0 auto 14px;color:var(--orange)}
-.dz-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px}
-.dz-sub{font-size:13.5px;color:var(--text2)}
-
-/* WELCOME / EMPTY */
-.welcome{max-width:740px;margin:30px auto;text-align:center;padding:40px 24px}
-.welcome-shield{width:80px;height:80px;margin:0 auto 22px;filter:drop-shadow(0 8px 30px rgba(220,85,42,.4))}
+/* WELCOME */
+.welcome{max-width:760px;margin:30px auto;text-align:center;padding:30px 24px}
+.welcome-shield{width:74px;height:74px;margin:0 auto 18px;filter:drop-shadow(0 8px 30px rgba(220,85,42,.4))}
 .welcome-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;font-family:'Space Grotesk',sans-serif}
-.welcome-h{font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
+.welcome-h{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
 .welcome-h em{color:var(--orange);font-style:normal}
-.welcome-sub{font-size:15px;color:var(--text2);line-height:1.6;max-width:560px;margin:0 auto 28px}
-.welcome-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.upload-zone{margin-top:36px;border:2px dashed var(--border-strong);border-radius:14px;padding:36px;cursor:pointer;transition:all .2s;background:var(--bg2)}
+.welcome-sub{font-size:15px;color:var(--text2);line-height:1.6;max-width:560px;margin:0 auto 26px}
+.upload-zone{margin-top:30px;border:2px dashed var(--border-2);border-radius:14px;padding:34px;cursor:pointer;transition:all .2s;background:var(--bg2)}
 .upload-zone:hover{border-color:var(--orange);background:rgba(220,85,42,.04)}
-.upload-zone svg{width:34px;height:34px;color:var(--orange);margin-bottom:10px}
-.upload-zone-title{font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);font-weight:600}
-.upload-zone-sub{font-size:12px;color:var(--text3);margin-top:4px}
+.upload-zone svg{width:30px;height:30px;color:var(--orange);margin-bottom:9px}
+.upload-zone-title{font-family:'Space Grotesk',sans-serif;font-size:13.5px;color:var(--text);font-weight:600}
+.upload-zone-sub{font-size:11.5px;color:var(--text3);margin-top:4px}
 
-/* OVERVIEW CARDS */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:22px}
-.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden;animation:fadeSlideUp .45s ease both}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--kc,var(--orange))}
-.kpi-icon{width:34px;height:34px;border-radius:9px;background:rgba(220,85,42,.12);color:var(--kc,var(--orange));display:flex;align-items:center;justify-content:center;margin-bottom:13px}
-.kpi-icon svg{width:17px;height:17px}
-.kpi-value{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-.02em}
-.kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:7px;font-weight:600}
-.kpi-sub{font-size:11px;color:var(--text2);margin-top:4px}
+/* HERO KPI STRIP */
+.hero-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--border);border-radius:11px;padding:14px 16px;position:relative;overflow:hidden;transition:all .25s;animation:kpiIn .45s ease both}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--kc,var(--orange))}
+.kpi::after{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;background:var(--kc,var(--orange));opacity:.06;transition:transform .35s}
+.kpi:hover{border-color:var(--border-2);transform:translateY(-2px)}
+.kpi:hover::after{transform:scale(1.6)}
+.kpi-h{display:flex;align-items:center;gap:8px;margin-bottom:9px;position:relative;z-index:1}
+.kpi-icon{width:24px;height:24px;border-radius:6px;background:rgba(220,85,42,.12);color:var(--kc,var(--orange));display:flex;align-items:center;justify-content:center}
+.kpi-icon svg{width:13px;height:13px}
+.kpi-label{font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.kpi-v{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--text);line-height:1.05;letter-spacing:-.02em;position:relative;z-index:1}
+.kpi-v.small{font-size:18px}
+.kpi-sub{font-size:11px;color:var(--text2);margin-top:5px;position:relative;z-index:1;font-family:'Space Grotesk',sans-serif}
+@keyframes kpiIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* FIELD CARDS */
-.fld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-.fld-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;cursor:pointer;transition:all .22s;animation:fadeSlideUp .35s ease both;position:relative;overflow:hidden}
-.fld-card:hover{border-color:var(--border-accent);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.35)}
-.fld-card.active{border-color:var(--orange);box-shadow:0 0 0 1px var(--orange),0 12px 36px rgba(220,85,42,.18)}
-.fld-card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
-.fld-card-name{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text);line-height:1.3;flex:1;word-break:break-word}
-.fld-card-meta{font-size:11px;color:var(--text3);margin-top:3px;font-family:'JetBrains Mono',monospace}
-.fld-stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;font-size:11.5px}
-.fld-stat-item{display:flex;flex-direction:column}
-.fld-stat-l{font-size:9.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:700;font-family:'Space Grotesk',sans-serif}
-.fld-stat-v{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text);margin-top:2px}
-.fld-chart{height:120px;position:relative}
-.fld-top-list{display:flex;flex-direction:column;gap:5px}
-.fld-top-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:5px 0;font-size:12px}
-.fld-top-bar-wrap{position:relative;background:rgba(255,255,255,.04);border-radius:5px;height:22px;display:flex;align-items:center;padding:0 9px;overflow:hidden;cursor:pointer;transition:background .15s}
-.fld-top-bar-wrap:hover{background:rgba(255,255,255,.08)}
-.fld-top-bar{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,rgba(220,85,42,.4),rgba(149,15,24,.45));border-radius:5px}
-.fld-top-bar.alt{background:linear-gradient(90deg,rgba(96,165,250,.4),rgba(59,130,246,.4))}
-.fld-top-bar.cat{background:linear-gradient(90deg,rgba(167,139,250,.4),rgba(139,92,246,.4))}
-.fld-top-name{position:relative;z-index:1;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
-.fld-top-count{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;color:var(--text2)}
-@keyframes fadeSlideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+/* INSIGHTS */
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:14px}
+.insight-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:16px 18px;animation:kpiIn .5s ease both;display:flex;flex-direction:column;min-height:240px}
+.insight-card.featured{background:linear-gradient(135deg,var(--bg2) 0%,rgba(149,15,24,.05) 100%);border-color:rgba(220,85,42,.18)}
+.insight-h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.insight-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
+.insight-sub{font-size:10.5px;color:var(--text3);margin-top:2px;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.08em}
+.insight-canvas{flex:1;position:relative;min-height:160px}
+.insight-empty{flex:1;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;font-style:italic}
+
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;flex-wrap:wrap;min-height:46px}
+.fb-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:'Space Grotesk',sans-serif;padding:0 4px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(220,85,42,.1);border:1px solid rgba(220,85,42,.22);border-radius:100px;font-size:11.5px}
+.chip-field{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--orange);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+.chip-sep{color:var(--text3);font-size:10px}
+.chip-value{color:var(--text);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip-x{color:var(--text3);cursor:pointer;width:14px;height:14px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .15s;font-size:14px;line-height:1}
+.chip-x:hover{background:rgba(248,113,113,.18);color:#f87171}
+.chip-add{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px dashed var(--border-2);border-radius:100px;font-size:11.5px;color:var(--text3);font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;transition:all .15s}
+.chip-add:hover{border-color:var(--orange);color:var(--orange)}
+.fb-spacer{flex:1}
+.fb-clear{font-size:11px;color:var(--text3);cursor:pointer;padding:4px 8px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-weight:600;transition:all .15s}
+.fb-clear:hover{color:var(--rose);background:rgba(248,113,113,.06)}
+
+/* GRID SECTION */
+.grid-card{background:var(--bg2);border:1px solid var(--border);border-radius:11px;overflow:hidden}
+.grid-toolbar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg3);flex-wrap:wrap}
+.gt-info{font-size:12px;color:var(--text2);font-family:'Space Grotesk',sans-serif}
+.gt-info strong{color:var(--text);font-weight:700}
+.gt-info em{color:var(--orange);font-style:normal;font-weight:700}
+.gt-spacer{flex:1}
+.gt-act{position:relative}
+.gt-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--bg2);border:1px solid var(--border-2);border-radius:10px;padding:6px;min-width:240px;max-height:380px;overflow-y:auto;z-index:30;display:none;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.gt-menu.open{display:block;animation:menuIn .15s ease both}
+@keyframes menuIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.gt-menu-title{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:6px 10px;font-family:'Space Grotesk',sans-serif}
+.col-row{display:flex;align-items:center;gap:9px;padding:6px 9px;border-radius:6px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .12s}
+.col-row:hover{background:rgba(255,255,255,.03);color:var(--text)}
+.col-row input{width:13px;height:13px;accent-color:var(--orange);flex-shrink:0}
 
 /* TABLE */
-.table-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.tt-info{font-size:13px;color:var(--text2)}
-.tt-info strong{color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:700}
-.tt-spacer{flex:1}
-.col-toggle{position:relative}
-.col-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--bg2);border:1px solid var(--border-strong);border-radius:10px;padding:8px;min-width:220px;max-height:380px;overflow-y:auto;z-index:30;display:none;box-shadow:0 18px 50px rgba(0,0,0,.5)}
-.col-menu.open{display:block}
-.col-menu-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:6px 10px;font-family:'Space Grotesk',sans-serif}
-.col-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12.5px;color:var(--text2);transition:all .12s}
-.col-row:hover{background:rgba(255,255,255,.03);color:var(--text)}
-.col-row input{width:14px;height:14px;accent-color:var(--orange);flex-shrink:0}
-.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.table-scroll{overflow:auto;max-height:calc(100vh - 230px)}
+.table-scroll{overflow:auto;max-height:calc(100vh - 110px)}
+.grid-card .table-scroll{max-height:none}
 table{width:100%;border-collapse:collapse}
-thead th{position:sticky;top:0;padding:11px 16px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);background:var(--bg3);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;font-family:'Space Grotesk',sans-serif}
+thead th{position:sticky;top:0;padding:9px 14px;text-align:left;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);background:var(--bg3);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;font-family:'Space Grotesk',sans-serif;z-index:5}
 thead th:hover{color:var(--text2)}
 thead th.sorted{color:var(--orange)}
-thead th .arrow{margin-left:4px;font-size:9px}
+thead th .arrow{margin-left:4px;font-size:9px;display:inline-block}
 tbody tr{border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:rgba(220,85,42,.04)}
-td{padding:10px 16px;font-size:12.5px;color:var(--text2);vertical-align:top;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tbody tr:hover{background:rgba(220,85,42,.05)}
+tbody tr.selected{background:rgba(220,85,42,.12)}
+td{padding:9px 14px;font-size:12px;color:var(--text2);vertical-align:top;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 td.cell-num{font-family:'JetBrains Mono',monospace;color:var(--text);text-align:right;font-weight:500}
 td.cell-bool{font-family:'Space Grotesk',sans-serif;font-weight:600}
 td.cell-bool.yes{color:var(--green)}
 td.cell-bool.no{color:var(--rose)}
 td.cell-date{font-family:'JetBrains Mono',monospace;color:var(--text2)}
 td.cell-cat{font-family:'Space Grotesk',sans-serif}
-td.cell-obj{font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:11.5px}
-td.cell-null{color:var(--text3);font-style:italic;font-size:11px}
+td.cell-obj{font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:11px}
+td.cell-null{color:var(--text4);font-style:italic;font-size:10.5px}
 
-.pagination{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:var(--bg3);border-top:1px solid var(--border)}
-.page-info{font-size:12px;color:var(--text3);font-family:'Space Grotesk',sans-serif}
-.page-controls{display:flex;gap:6px;align-items:center}
-.pg-btn{width:30px;height:30px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.pg-btn:hover:not(:disabled){border-color:var(--border-accent);color:var(--text)}
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:var(--bg3);border-top:1px solid var(--border)}
+.page-info{font-size:11.5px;color:var(--text3);font-family:'Space Grotesk',sans-serif}
+.page-info select{margin:0 4px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:2px 6px;color:var(--text2);font-size:11px;font-family:inherit;cursor:pointer}
+.page-controls{display:flex;gap:5px;align-items:center}
+.pg-btn{width:28px;height:28px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.pg-btn:hover:not(:disabled){border-color:var(--accent);color:var(--text)}
 .pg-btn:disabled{opacity:.4;cursor:not-allowed}
-.pg-btn svg{width:14px;height:14px}
-.page-cur{font-family:'Space Grotesk',sans-serif;font-size:12.5px;color:var(--text);padding:0 10px;font-weight:600}
+.pg-btn svg{width:13px;height:13px}
+.page-cur{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--text);padding:0 8px;font-weight:600}
 
-/* BUILDER */
-.builder-grid{display:grid;grid-template-columns:300px 1fr;gap:18px}
-.builder-config{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;height:fit-content;position:sticky;top:84px}
-.builder-canvas{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px;min-height:480px;display:flex;flex-direction:column}
-.builder-canvas.empty{align-items:center;justify-content:center;color:var(--text3)}
-.cfg-section{margin-bottom:18px}
-.cfg-section:last-child{margin-bottom:0}
-.cfg-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;font-family:'Space Grotesk',sans-serif}
-.cfg-select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12.5px;outline:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .15s}
-.cfg-select:hover,.cfg-select:focus{border-color:var(--border-accent)}
-.chart-types{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.ctype{padding:11px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--text3);transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;font-weight:600;font-family:'Space Grotesk',sans-serif}
-.ctype svg{width:18px;height:18px}
-.ctype:hover{border-color:var(--border-strong);color:var(--text2)}
-.ctype.active{border-color:var(--orange);background:rgba(220,85,42,.1);color:var(--orange)}
-.canvas-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:14px;flex-wrap:wrap}
-.canvas-head h3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
-.canvas-head p{font-size:12px;color:var(--text3);margin-top:3px}
-.canvas-chart{flex:1;min-height:380px;position:relative}
+/* ADD FILTER POPOVER */
+.popover{position:fixed;background:var(--bg2);border:1px solid var(--border-2);border-radius:11px;padding:8px;min-width:280px;max-height:420px;overflow-y:auto;z-index:300;box-shadow:0 24px 60px rgba(0,0,0,.6);display:none}
+.popover.open{display:block;animation:menuIn .18s ease both}
+.pop-title{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:6px 9px;font-family:'Space Grotesk',sans-serif}
+.pop-row{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:12.5px;color:var(--text2);transition:all .12s}
+.pop-row:hover{background:rgba(220,85,42,.06);color:var(--text)}
+.pop-row .field-name{font-family:'Space Grotesk',sans-serif;font-weight:500}
 
-/* RECORD MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
-.modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--bg2);border:1px solid var(--border-strong);border-radius:16px;max-width:760px;width:100%;max-height:88vh;overflow-y:auto;transform:translateY(20px) scale(.96);transition:transform .3s cubic-bezier(.34,1.56,.64,1);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-.modal-overlay.open .modal{transform:translateY(0) scale(1)}
-.modal-head{padding:22px 26px 18px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;border-bottom:1px solid var(--border)}
-.modal-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;font-family:'Space Grotesk',sans-serif}
-.modal-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text);line-height:1.2}
-.modal-close{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .15s;flex-shrink:0}
-.modal-close:hover{background:rgba(248,113,113,.15);color:#f87171;transform:rotate(90deg)}
-.modal-body{padding:20px 26px 24px}
-.field-detail{display:grid;grid-template-columns:160px 1fr;gap:12px 16px;padding:9px 0;border-bottom:1px solid var(--border);align-items:start}
-.field-detail:last-child{border-bottom:none}
-.fd-label{font-size:11px;color:var(--text3);font-weight:600;font-family:'Space Grotesk',sans-serif;letter-spacing:.04em;padding-top:2px}
-.fd-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
-.fd-value pre{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--bg3);padding:10px;border-radius:7px;overflow-x:auto;color:var(--text2);white-space:pre-wrap;max-height:240px;overflow-y:auto}
+/* DRAWER */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100vw;background:var(--bg2);border-left:1px solid var(--border-2);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:200;overflow-y:auto;box-shadow:-20px 0 60px rgba(0,0,0,.5);display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);z-index:150;opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer-backdrop.open{opacity:1;pointer-events:all}
+.drawer-h{padding:18px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:14px;background:var(--bg2);position:sticky;top:0;z-index:5}
+.drawer-h-info{flex:1;min-width:0}
+.drawer-eye{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;font-family:'Space Grotesk',sans-serif}
+.drawer-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text);line-height:1.25;word-break:break-word}
+.drawer-x{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .15s;flex-shrink:0;border:0}
+.drawer-x:hover{background:rgba(248,113,113,.15);color:#f87171;transform:rotate(90deg)}
+.drawer-body{flex:1;padding:16px 22px 22px;overflow-y:auto}
+.field-row-d{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;padding:9px 0;border-bottom:1px solid var(--border);align-items:start}
+.field-row-d:last-child{border-bottom:none}
+.fd-label{font-size:10.5px;color:var(--text3);font-weight:700;font-family:'Space Grotesk',sans-serif;letter-spacing:.04em;text-transform:uppercase;padding-top:2px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.fd-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.55;font-family:'Space Grotesk',sans-serif}
+.fd-value.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
+.fd-value pre{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg3);padding:9px;border-radius:7px;overflow:auto;color:var(--text2);white-space:pre-wrap;max-height:240px}
+.drawer-nav{display:flex;justify-content:space-between;gap:8px;padding:12px 22px;border-top:1px solid var(--border);background:var(--bg2)}
+.drawer-nav button{flex:1;padding:9px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:12px;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.drawer-nav button:hover:not(:disabled){border-color:var(--accent);color:var(--text)}
+.drawer-nav button:disabled{opacity:.4;cursor:not-allowed}
+.drawer-nav button svg{width:13px;height:13px}
 
-/* FILTER EDITOR */
-.filter-edit{padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;margin:6px 10px 0}
-.fe-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.fe-row:last-child{margin-bottom:0}
-.fe-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12px;outline:none}
-.fe-input:focus{border-color:var(--orange)}
-.fe-list{max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:1px}
-.fe-opt{display:flex;align-items:center;gap:7px;padding:5px 6px;font-size:12px;color:var(--text2);cursor:pointer;border-radius:5px;transition:background .12s}
-.fe-opt:hover{background:rgba(255,255,255,.03);color:var(--text)}
-.fe-opt input{width:13px;height:13px;accent-color:var(--orange)}
-.fe-opt-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fe-opt-cnt{font-size:10.5px;color:var(--text3);font-family:'Space Grotesk',sans-serif;font-weight:600}
-.fe-actions{display:flex;gap:6px;margin-top:9px;padding-top:9px;border-top:1px solid var(--border)}
-.fe-btn{flex:1;padding:6px 8px;border-radius:6px;font-size:11.5px;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text2);transition:all .15s}
-.fe-btn:hover{border-color:var(--border-accent);color:var(--text)}
-.fe-btn.primary{background:var(--orange);color:white;border-color:var(--orange)}
-.fe-btn.primary:hover{background:#e26538}
-
-/* CHIP CONTROL EDITOR INLINE - for ranges */
-.range-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* DROP ZONE */
+.dropzone{position:fixed;inset:0;background:rgba(8,10,13,.92);backdrop-filter:blur(10px);z-index:500;display:none;align-items:center;justify-content:center;padding:40px}
+.dropzone.over{display:flex}
+.dz-inner{border:2px dashed var(--orange);border-radius:18px;padding:52px;text-align:center;background:rgba(220,85,42,.05);max-width:520px}
+.dz-icon{width:54px;height:54px;margin:0 auto 14px;color:var(--orange)}
+.dz-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px}
+.dz-sub{font-size:13px;color:var(--text2)}
 
 /* TOAST */
-.toast-wrap{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
-.toast{background:var(--bg2);border:1px solid var(--border-strong);border-radius:10px;padding:12px 16px;font-size:12.5px;color:var(--text);box-shadow:0 14px 40px rgba(0,0,0,.5);max-width:340px;animation:toastIn .3s ease both;pointer-events:all}
+.toast-wrap{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:var(--bg2);border:1px solid var(--border-2);border-radius:10px;padding:11px 15px;font-size:12px;color:var(--text);box-shadow:0 14px 40px rgba(0,0,0,.5);max-width:340px;animation:toastIn .3s ease both;pointer-events:all}
 .toast.error{border-left:3px solid var(--rose)}
 .toast.success{border-left:3px solid var(--green)}
-.toast-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;margin-bottom:3px;letter-spacing:.04em}
-.toast-msg{color:var(--text2);font-size:12px;line-height:1.4}
+.toast-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11.5px;margin-bottom:3px;letter-spacing:.04em}
+.toast-msg{color:var(--text2);font-size:11.5px;line-height:1.4}
 @keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 
 /* RESPONSIVE */
-@media (max-width:1100px){.builder-grid{grid-template-columns:1fr}.builder-config{position:static}}
-@media (max-width:900px){.sidebar{transform:translateX(-100%);box-shadow:0 0 60px rgba(0,0,0,.5)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menu-toggle{display:flex}.search-wrap{display:none}}
-@media (max-width:600px){.content{padding:16px}.welcome-h{font-size:28px}}
-
-.empty-state{padding:60px 20px;text-align:center;color:var(--text3);background:var(--bg2);border:1px dashed var(--border);border-radius:12px}
-.empty-state svg{width:42px;height:42px;margin-bottom:12px;opacity:.4}
-.empty-state p{font-size:13.5px}
+@media (max-width:1100px){.hero-strip{grid-template-columns:repeat(3,1fr)}.insight-strip{grid-template-columns:1fr}}
+@media (max-width:900px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;z-index:300;transform:translateX(-100%);box-shadow:0 0 60px rgba(0,0,0,.5)}.sidebar.open{transform:translateX(0)}.menu-toggle{display:flex}.search-wrap{display:none}.drawer{width:100%}}
+@media (max-width:600px){.content{padding:14px}.hero-strip{grid-template-columns:repeat(2,1fr)}.welcome-h{font-size:26px}}
 </style>
 </head>
 <body>
@@ -305,15 +292,12 @@ td.cell-null{color:var(--text3);font-style:italic;font-size:11px}
           <path d="M13 24.5l5 5 9-11" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
           <defs><linearGradient id="sg" x1="4" y1="2" x2="36" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#DC552A"/><stop offset="1" stop-color="#950f18"/></linearGradient></defs>
         </svg>
-        <div class="logo-text">
-          <div class="logo-name">BreachShield</div>
-          <div class="logo-sub">Data · Intelligence</div>
-        </div>
+        <div class="logo-text"><div class="logo-name">BreachShield</div><div class="logo-sub">Data · Intelligence</div></div>
       </div>
     </div>
     <div class="sidebar-scroll" id="sidebarScroll"></div>
     <div class="sidebar-footer">
-      <button class="foot-btn" id="loadBtn">
+      <button class="foot-btn primary" id="loadBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Load JSON file
       </button>
@@ -333,27 +317,24 @@ td.cell-null{color:var(--text3);font-style:italic;font-size:11px}
         <div class="title-block-name" id="tbName">No data loaded</div>
         <div class="title-block-meta" id="tbMeta">Drop a JSON file to begin</div>
       </div>
-      <div class="view-tabs" id="viewTabs">
-        <button class="view-tab active" data-v="overview">${''}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Overview</button>
-        <button class="view-tab" data-v="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Explore</button>
-        <button class="view-tab" data-v="builder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>Reports</button>
-      </div>
       <div class="search-wrap">
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input class="search-input" id="search" placeholder="Search across all fields..." autocomplete="off">
+        <input class="search-input" id="search" placeholder="Search across all fields…" autocomplete="off">
         <span class="kbd">⌘K</span>
       </div>
       <button class="btn-ghost" id="exportBtn" title="Export filtered data as CSV">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        CSV
+        Export CSV
       </button>
       <div class="live-pill"><span class="live-dot"></span>Live</div>
     </header>
-    <main class="content" id="content"></main>
+    <div class="content" id="content"></div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay"><div class="modal" id="modal"></div></div>
+<aside class="drawer" id="drawer"></aside>
+<div class="drawer-backdrop" id="drawerBack"></div>
+<div class="popover" id="addFilterPop"></div>
 <div class="dropzone" id="dropzone">
   <div class="dz-inner">
     <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -366,42 +347,28 @@ td.cell-null{color:var(--text3);font-style:italic;font-size:11px}
 
 <script>
 /* ============================================================
-   BREACHSHIELD · Data Intelligence
-   Generic JSON-driven BI: schema autodetection, filters, reports
+   BREACHSHIELD · Data Intelligence — unified BI workbench
    ============================================================ */
 
 const APP = {
- raw: null,           // original parsed JSON
- datasets: {},        // {name: array}
- currentDS: null,     // current dataset name
- schema: {},          // detected schema for current dataset
- filters: {},         // {field: filter}
- search: '',
- view: 'overview',
- sort: {field:null, dir:'asc'},
- page: 1,
- pageSize: 50,
- visibleCols: null,   // null = all
- builder: {type:'bar', x:null, y:null, agg:'count', group:null},
- charts: {},
- expandedFilter: null
+ raw:null, datasets:{}, currentDS:null, schema:{},
+ filters:{}, search:'',
+ sort:{field:null,dir:'asc'}, page:1, pageSize:25,
+ visibleCols:null, expandedFilter:null,
+ charts:{}, drawerIdx:null, drawerRecords:[]
 };
+const palette = ['#DC552A','#60a5fa','#22c55e','#a78bfa','#f59e0b','#f472b6','#22d3ee','#fb923c','#84cc16','#950f18'];
 
-const palette = ['#DC552A','#950f18','#60a5fa','#22c55e','#f59e0b','#a78bfa','#f472b6','#22d3ee','#fb923c','#84cc16'];
-
-/* ============================================================
-   SCHEMA DETECTION
-   ============================================================ */
+/* ---------- SCHEMA ---------- */
 function detectType(v){
  if (v === null || v === undefined) return 'null';
  if (typeof v === 'number') return Number.isFinite(v) ? 'number' : 'null';
  if (typeof v === 'boolean') return 'boolean';
  if (typeof v === 'string'){
    if (v === '') return 'null';
-   // detect ISO date or YYYY-MM-DD
-   if (/^\d{4}-\d{2}-\d{2}([T\s].*)?$/.test(v)){
+   if (/^\d{4}-\d{2}-\d{2}([T\s].*)?$/.test(v) || /^\d{10,13}$/.test(v) === false && /^\d{1,2}\/\d{1,2}\/\d{2,4}/.test(v)){
      const d = new Date(v);
-     if (!isNaN(d)) return 'date';
+     if (!isNaN(d) && d.getFullYear() > 1900 && d.getFullYear() < 2200) return 'date';
    }
    return 'string';
  }
@@ -431,7 +398,6 @@ function detectSchema(records){
        if (fields[key].min===null||d<fields[key].min) fields[key].min = d;
        if (fields[key].max===null||d>fields[key].max) fields[key].max = d;
      }
-     // bucket of values for category detection
      if (t === 'string' || t === 'boolean' || t === 'number'){
        const k = String(v);
        fields[key].values.set(k, (fields[key].values.get(k)||0)+1);
@@ -439,7 +405,6 @@ function detectSchema(records){
      if (fields[key].sample.length < 3) fields[key].sample.push(v);
    }
  }
- // resolve primary type
  for (const key of Object.keys(fields)){
    const f = fields[key];
    const sorted = Object.entries(f.types).sort((a,b)=>b[1]-a[1]);
@@ -448,77 +413,46 @@ function detectSchema(records){
    if (f.type === 'string' && f.cardinality > 0 && f.cardinality <= Math.max(20, records.length * 0.15) && f.cardinality < records.length){
      f.type = 'category';
    }
-   if (f.type === 'number'){
-     f.avg = f.filled ? f.sum / f.filled : 0;
-   }
+   if (f.type === 'number') f.avg = f.filled ? f.sum / f.filled : 0;
  }
  return fields;
 }
 
-/* ============================================================
-   DATA LOADING
-   ============================================================ */
-async function loadDefault(){
- // No auto-load. The app waits for the user to drop their own JSON.
- showWelcome();
-}
+/* ---------- LOADING ---------- */
+async function loadDefault(){ showWelcome(); }
 
 function ingestJSON(j, sourceName){
  APP.raw = j;
  APP.datasets = {};
- // case 1: top-level array
  if (Array.isArray(j)){
    APP.datasets[sourceName || 'records'] = j.filter(x=>x && typeof x==='object' && !Array.isArray(x));
- }
- // case 2: object with arrays inside (CRM-style)
- else if (j && typeof j === 'object'){
+ } else if (j && typeof j === 'object'){
    for (const key of Object.keys(j)){
      const v = j[key];
      if (Array.isArray(v) && v.length && v.every(x=>x && typeof x==='object' && !Array.isArray(x))){
        APP.datasets[key] = v;
      }
    }
-   // if nothing found, fallback: wrap the object
-   if (!Object.keys(APP.datasets).length){
-     APP.datasets['record'] = [j];
-   }
- } else {
-   toast('error','Bad input','JSON must be an array or object');
-   return;
- }
-
+   if (!Object.keys(APP.datasets).length) APP.datasets['record'] = [j];
+ } else { toast('error','Bad input','JSON must be an array or object'); return; }
  const names = Object.keys(APP.datasets);
- if (!names.length){
-   toast('error','No data','No tabular arrays detected in this JSON');
-   showWelcome();
-   return;
- }
- // pick the largest dataset by default
+ if (!names.length){ toast('error','No data','No tabular arrays detected'); showWelcome(); return; }
  names.sort((a,b)=>APP.datasets[b].length - APP.datasets[a].length);
  switchDataset(names[0]);
- buildSidebar();
 }
 
 function switchDataset(name){
  APP.currentDS = name;
  APP.schema = detectSchema(APP.datasets[name]);
- APP.filters = {};
- APP.search = '';
- APP.sort = {field:null, dir:'asc'};
- APP.page = 1;
- APP.visibleCols = null;
- APP.builder = {type:'bar', x:null, y:null, agg:'count', group:null};
- APP.expandedFilter = null;
- const search = document.getElementById('search');
- if (search) search.value = '';
- buildSidebar();
- updateTopbar();
- render();
+ APP.filters = {}; APP.search = '';
+ APP.sort = {field:null,dir:'asc'};
+ APP.page = 1; APP.visibleCols = null; APP.expandedFilter = null;
+ const s = document.getElementById('search'); if (s) s.value = '';
+ closeDrawer();
+ buildSidebar(); render();
 }
 
-/* ============================================================
-   FILTERING
-   ============================================================ */
+/* ---------- FILTERS ---------- */
 function applyFilters(records){
  const filters = Object.values(APP.filters);
  const q = APP.search.trim().toLowerCase();
@@ -527,53 +461,30 @@ function applyFilters(records){
      const hay = Object.values(rec).map(v => v==null?'':String(v)).join(' ').toLowerCase();
      if (!hay.includes(q)) return false;
    }
-   for (const f of filters){
-     if (!testFilter(rec, f)) return false;
-   }
+   for (const f of filters){ if (!testFilter(rec, f)) return false; }
    return true;
  });
 }
-
 function testFilter(rec, f){
  const v = rec[f.field];
  if (v === null || v === undefined || v === '') return false;
- if (f.op === 'in'){
-   return f.values.includes(String(v));
- }
- if (f.op === 'between'){
-   const n = Number(v);
-   return n >= f.min && n <= f.max;
- }
- if (f.op === 'date_between'){
-   const t = new Date(v).getTime();
-   return t >= f.min && t <= f.max;
- }
- if (f.op === 'contains'){
-   return String(v).toLowerCase().includes(String(f.text).toLowerCase());
- }
- if (f.op === 'bool'){
-   return Boolean(v) === f.value;
- }
+ if (f.op === 'in') return f.values.includes(String(v));
+ if (f.op === 'between'){ const n = Number(v); return n >= f.min && n <= f.max; }
+ if (f.op === 'date_between'){ const t = new Date(v).getTime(); return t >= f.min && t <= f.max; }
+ if (f.op === 'contains') return String(v).toLowerCase().includes(String(f.text).toLowerCase());
+ if (f.op === 'bool') return Boolean(v) === f.value;
  return true;
 }
+function getFiltered(){ return APP.currentDS ? applyFilters(APP.datasets[APP.currentDS]) : []; }
 
-function getFiltered(){
- if (!APP.currentDS) return [];
- return applyFilters(APP.datasets[APP.currentDS]);
-}
-
-/* ============================================================
-   SIDEBAR
-   ============================================================ */
+/* ---------- SIDEBAR ---------- */
 function buildSidebar(){
  const root = document.getElementById('sidebarScroll');
  if (!APP.currentDS){
-   root.innerHTML = `<div style="padding:30px 20px;text-align:center;color:var(--text3);font-size:13px;line-height:1.5">No dataset loaded.<br>Drop a JSON file or click <strong style="color:var(--orange)">Load JSON file</strong> below.</div>`;
+   root.innerHTML = `<div style="padding:30px 18px;text-align:center;color:var(--text3);font-size:12.5px;line-height:1.55">No dataset loaded.<br>Drop a JSON file or click <strong style="color:var(--orange)">Load JSON file</strong> below.</div>`;
    return;
  }
  const dsNames = Object.keys(APP.datasets);
- const filterCount = Object.keys(APP.filters).length;
-
  let html = '';
  if (dsNames.length > 1){
    html += `<div class="side-section">
@@ -586,62 +497,29 @@ function buildSidebar(){
      </div>
    </div>`;
  }
-
- html += `<div class="side-section">
-   <div class="side-section-head">
-     <div class="side-section-title">Filters · ${filterCount}</div>
-     ${filterCount?`<div class="side-section-action" onclick="clearFilters()">Clear</div>`:''}
-   </div>
-   <div class="filter-chips" id="filterChips">${renderChips()}</div>
- </div>`;
-
  const fields = Object.entries(APP.schema);
  html += `<div class="side-section">
-   <div class="side-section-head">
-     <div class="side-section-title">Fields · ${fields.length}</div>
-   </div>
+   <div class="side-section-head"><div class="side-section-title">Fields · ${fields.length}</div></div>
    <div class="field-list" id="fieldList">
      ${fields.map(([name,f])=>{
        const has = !!APP.filters[name];
        const expanded = APP.expandedFilter === name;
-       return `<div class="field-row ${has?'has-filter':''}" data-field="${escapeAttr(name)}">
+       return `<div class="field-row ${has?'has-filter':''} ${expanded?'expanded':''}" data-field="${escapeAttr(name)}" title="${escapeAttr(name)}">
          <span class="type-pill t-${typeShort(f.type)}">${typeAbbr(f.type)}</span>
-         <span class="field-name" title="${escapeAttr(name)}">${escapeHTML(humanize(name))}</span>
-         <span class="field-card">${fieldStat(f)}</span>
+         <span class="field-name">${escapeHTML(humanize(name))}</span>
+         <span class="field-card-stat">${fieldStat(f)}</span>
        </div>${expanded?renderFilterEditor(name,f):''}`;
      }).join('')}
    </div>
  </div>`;
-
  root.innerHTML = html;
  root.querySelectorAll('.ds-item').forEach(el => el.addEventListener('click', () => switchDataset(el.dataset.ds)));
  root.querySelectorAll('.field-row').forEach(el => el.addEventListener('click', () => toggleFilterEditor(el.dataset.field)));
 }
 
-function renderChips(){
- const filters = Object.entries(APP.filters);
- if (!filters.length) return '<div class="no-filters">No active filters</div>';
- return filters.map(([key,f]) => `<div class="chip" title="${escapeAttr(key)}">
-   <div class="chip-content">
-     <div class="chip-field">${escapeHTML(humanize(key))}</div>
-     <div class="chip-value">${chipDescription(f)}</div>
-   </div>
-   <span class="chip-x" onclick="event.stopPropagation();removeFilter('${escapeAttr(key)}')">×</span>
- </div>`).join('');
-}
-
-function chipDescription(f){
- if (f.op === 'in') return f.values.length > 3 ? f.values.slice(0,3).join(', ') + ` <span style="color:var(--text3)">+${f.values.length-3}</span>` : f.values.join(', ');
- if (f.op === 'between') return `${formatNum(f.min)} – ${formatNum(f.max)}`;
- if (f.op === 'date_between') return `${formatDate(f.min)} – ${formatDate(f.max)}`;
- if (f.op === 'contains') return `contains "${escapeHTML(f.text)}"`;
- if (f.op === 'bool') return f.value ? 'true' : 'false';
- return '';
-}
-
 function fieldStat(f){
  if (f.type === 'number') return `${formatNum(f.min)}–${formatNum(f.max)}`;
- if (f.type === 'date'){ const a = formatDate(f.min); const b = formatDate(f.max); return a===b?a:`${a}…`; }
+ if (f.type === 'date'){ const a = formatDate(f.min); const b = formatDate(f.max); return a===b?a:`${formatDate(f.min,true)}…`; }
  if (f.type === 'category') return `${f.cardinality}`;
  if (f.type === 'string') return f.cardinality > 999 ? '999+' : `${f.cardinality}`;
  if (f.type === 'boolean') return 'T/F';
@@ -651,17 +529,14 @@ function fieldStat(f){
 function typeShort(t){ return ({'number':'num','category':'cat','string':'str','date':'date','boolean':'bool','object':'obj','array':'obj'})[t] || 'str'; }
 function typeAbbr(t){ return ({'number':'NUM','category':'CAT','string':'STR','date':'DATE','boolean':'BOOL','object':'OBJ','array':'ARR'})[t] || 'STR'; }
 
-function toggleFilterEditor(field){
- APP.expandedFilter = APP.expandedFilter === field ? null : field;
- buildSidebar();
-}
+function toggleFilterEditor(field){ APP.expandedFilter = APP.expandedFilter === field ? null : field; buildSidebar(); }
 
 function renderFilterEditor(name, f){
  const active = APP.filters[name];
- if (f.type === 'category' || (f.type === 'string' && f.cardinality <= 30)){
+ if (f.type === 'category' || (f.type === 'string' && f.cardinality <= 50) || f.type === 'boolean'){
    const top = [...f.values.entries()].sort((a,b)=>b[1]-a[1]);
    const sel = active && active.op === 'in' ? new Set(active.values) : new Set();
-   return `<div class="filter-edit" id="fe-${escapeAttr(name)}" onclick="event.stopPropagation()">
+   return `<div class="filter-edit" id="fe-${cssId(name)}" onclick="event.stopPropagation()">
      <div class="fe-list">
        ${top.map(([val,cnt])=>`<label class="fe-opt">
          <input type="checkbox" data-val="${escapeAttr(val)}" ${sel.has(val)?'checked':''}>
@@ -678,11 +553,11 @@ function renderFilterEditor(name, f){
  if (f.type === 'number'){
    const min = active && active.op === 'between' ? active.min : f.min;
    const max = active && active.op === 'between' ? active.max : f.max;
-   return `<div class="filter-edit" id="fe-${escapeAttr(name)}" onclick="event.stopPropagation()">
-     <div class="fe-row" style="font-size:11px;color:var(--text3);font-family:'Space Grotesk'">Range: ${formatNum(f.min)} – ${formatNum(f.max)}</div>
+   return `<div class="filter-edit" id="fe-${cssId(name)}" onclick="event.stopPropagation()">
+     <div style="font-size:10.5px;color:var(--text3);font-family:'Space Grotesk';margin-bottom:6px">Range: ${formatNum(f.min)} – ${formatNum(f.max)}</div>
      <div class="range-row">
-       <input class="fe-input" type="number" id="fmin-${escapeAttr(name)}" placeholder="min" value="${min}">
-       <input class="fe-input" type="number" id="fmax-${escapeAttr(name)}" placeholder="max" value="${max}">
+       <input class="fe-input" type="number" id="fmin-${cssId(name)}" placeholder="min" value="${min}">
+       <input class="fe-input" type="number" id="fmax-${cssId(name)}" placeholder="max" value="${max}">
      </div>
      <div class="fe-actions">
        <button class="fe-btn" onclick="cancelFilter('${escapeAttr(name)}')">Cancel</button>
@@ -693,10 +568,10 @@ function renderFilterEditor(name, f){
  if (f.type === 'date'){
    const min = active && active.op === 'date_between' ? new Date(active.min).toISOString().slice(0,10) : new Date(f.min).toISOString().slice(0,10);
    const max = active && active.op === 'date_between' ? new Date(active.max).toISOString().slice(0,10) : new Date(f.max).toISOString().slice(0,10);
-   return `<div class="filter-edit" id="fe-${escapeAttr(name)}" onclick="event.stopPropagation()">
+   return `<div class="filter-edit" id="fe-${cssId(name)}" onclick="event.stopPropagation()">
      <div class="range-row">
-       <input class="fe-input" type="date" id="fmin-${escapeAttr(name)}" value="${min}">
-       <input class="fe-input" type="date" id="fmax-${escapeAttr(name)}" value="${max}">
+       <input class="fe-input" type="date" id="fmin-${cssId(name)}" value="${min}">
+       <input class="fe-input" type="date" id="fmax-${cssId(name)}" value="${max}">
      </div>
      <div class="fe-actions">
        <button class="fe-btn" onclick="cancelFilter('${escapeAttr(name)}')">Cancel</button>
@@ -704,23 +579,9 @@ function renderFilterEditor(name, f){
      </div>
    </div>`;
  }
- if (f.type === 'boolean'){
-   const cur = active && active.op === 'bool' ? active.value : null;
-   return `<div class="filter-edit" id="fe-${escapeAttr(name)}" onclick="event.stopPropagation()">
-     <div class="fe-list">
-       <label class="fe-opt"><input type="radio" name="b-${escapeAttr(name)}" data-v="true" ${cur===true?'checked':''}><span class="fe-opt-label" style="color:var(--green);font-weight:600">true</span></label>
-       <label class="fe-opt"><input type="radio" name="b-${escapeAttr(name)}" data-v="false" ${cur===false?'checked':''}><span class="fe-opt-label" style="color:var(--rose);font-weight:600">false</span></label>
-     </div>
-     <div class="fe-actions">
-       <button class="fe-btn" onclick="cancelFilter('${escapeAttr(name)}')">Cancel</button>
-       <button class="fe-btn primary" onclick="applyBoolFilter('${escapeAttr(name)}')">Apply</button>
-     </div>
-   </div>`;
- }
- // string with high cardinality → contains
  const cur = active && active.op === 'contains' ? active.text : '';
- return `<div class="filter-edit" id="fe-${escapeAttr(name)}" onclick="event.stopPropagation()">
-   <div class="fe-row"><input class="fe-input" id="ftxt-${escapeAttr(name)}" placeholder="Text contains..." value="${escapeAttr(cur)}"></div>
+ return `<div class="filter-edit" id="fe-${cssId(name)}" onclick="event.stopPropagation()">
+   <div class="fe-row"><input class="fe-input" id="ftxt-${cssId(name)}" placeholder="Text contains..." value="${escapeAttr(cur)}"></div>
    <div class="fe-actions">
      <button class="fe-btn" onclick="cancelFilter('${escapeAttr(name)}')">Cancel</button>
      <button class="fe-btn primary" onclick="applyTextFilter('${escapeAttr(name)}')">Apply</button>
@@ -729,100 +590,63 @@ function renderFilterEditor(name, f){
 }
 
 function applyCategoryFilter(name){
- const box = document.getElementById('fe-'+name);
+ const box = document.getElementById('fe-'+cssId(name));
  const sel = [...box.querySelectorAll('input[type=checkbox]:checked')].map(i=>i.dataset.val);
- if (sel.length){
-   APP.filters[name] = {field:name, op:'in', values:sel};
- } else delete APP.filters[name];
- APP.expandedFilter = null;
- APP.page = 1;
- buildSidebar();
- render();
+ if (sel.length) APP.filters[name] = {field:name, op:'in', values:sel}; else delete APP.filters[name];
+ APP.expandedFilter = null; APP.page = 1; buildSidebar(); render();
 }
 function applyRangeFilter(name){
- const min = parseFloat(document.getElementById('fmin-'+name).value);
- const max = parseFloat(document.getElementById('fmax-'+name).value);
- if (!isNaN(min) && !isNaN(max)){
-   APP.filters[name] = {field:name, op:'between', min, max};
- }
- APP.expandedFilter = null;
- APP.page = 1;
- buildSidebar(); render();
+ const min = parseFloat(document.getElementById('fmin-'+cssId(name)).value);
+ const max = parseFloat(document.getElementById('fmax-'+cssId(name)).value);
+ if (!isNaN(min) && !isNaN(max)) APP.filters[name] = {field:name, op:'between', min, max};
+ APP.expandedFilter = null; APP.page = 1; buildSidebar(); render();
 }
 function applyDateFilter(name){
- const mn = document.getElementById('fmin-'+name).value;
- const mx = document.getElementById('fmax-'+name).value;
- if (mn && mx){
-   APP.filters[name] = {field:name, op:'date_between', min:new Date(mn).getTime(), max:new Date(mx+'T23:59:59').getTime()};
- }
- APP.expandedFilter = null;
- APP.page = 1;
- buildSidebar(); render();
-}
-function applyBoolFilter(name){
- const sel = document.querySelector(`input[name="b-${name}"]:checked`);
- if (sel) APP.filters[name] = {field:name, op:'bool', value: sel.dataset.v === 'true'};
- APP.expandedFilter = null;
- APP.page = 1;
- buildSidebar(); render();
+ const mn = document.getElementById('fmin-'+cssId(name)).value;
+ const mx = document.getElementById('fmax-'+cssId(name)).value;
+ if (mn && mx) APP.filters[name] = {field:name, op:'date_between', min:new Date(mn).getTime(), max:new Date(mx+'T23:59:59').getTime()};
+ APP.expandedFilter = null; APP.page = 1; buildSidebar(); render();
 }
 function applyTextFilter(name){
- const t = document.getElementById('ftxt-'+name).value.trim();
- if (t) APP.filters[name] = {field:name, op:'contains', text:t};
- else delete APP.filters[name];
- APP.expandedFilter = null;
- APP.page = 1;
- buildSidebar(); render();
+ const t = document.getElementById('ftxt-'+cssId(name)).value.trim();
+ if (t) APP.filters[name] = {field:name, op:'contains', text:t}; else delete APP.filters[name];
+ APP.expandedFilter = null; APP.page = 1; buildSidebar(); render();
 }
-function cancelFilter(name){
- APP.expandedFilter = null;
- buildSidebar();
-}
-function removeFilter(name){
- delete APP.filters[name];
- APP.page = 1;
- buildSidebar(); render();
-}
-function clearFilters(){
- APP.filters = {};
- APP.search = '';
- const s = document.getElementById('search');
- if (s) s.value = '';
- APP.page = 1;
- buildSidebar(); render();
-}
+function cancelFilter(){ APP.expandedFilter = null; buildSidebar(); }
+function removeFilter(name){ delete APP.filters[name]; APP.page = 1; buildSidebar(); render(); }
+function clearFilters(){ APP.filters = {}; APP.search = ''; const s = document.getElementById('search'); if (s) s.value = ''; APP.page = 1; buildSidebar(); render(); }
 
-/* ============================================================
-   TOPBAR
-   ============================================================ */
+/* ---------- TOPBAR ---------- */
 function updateTopbar(){
- if (!APP.currentDS){
-   document.getElementById('tbName').textContent = 'No data loaded';
-   document.getElementById('tbMeta').textContent = 'Drop a JSON file to begin';
-   return;
- }
+ if (!APP.currentDS){ document.getElementById('tbName').textContent = 'No data loaded'; document.getElementById('tbMeta').textContent = 'Drop a JSON file to begin'; return; }
  document.getElementById('tbName').textContent = humanize(APP.currentDS);
  document.getElementById('tbName').title = APP.currentDS;
  const total = APP.datasets[APP.currentDS].length;
  const filtered = getFiltered().length;
- const fieldCount = Object.keys(APP.schema).length;
+ const fc = Object.keys(APP.schema).length;
  document.getElementById('tbMeta').innerHTML = filtered === total
-   ? `<strong>${total.toLocaleString()}</strong> records · ${fieldCount} fields`
-   : `<strong>${filtered.toLocaleString()}</strong> of ${total.toLocaleString()} records · ${fieldCount} fields`;
+   ? `<strong>${total.toLocaleString()}</strong> records · ${fc} fields`
+   : `<strong>${filtered.toLocaleString()}</strong> of ${total.toLocaleString()} records · ${fc} fields`;
 }
 
-/* ============================================================
-   VIEWS
-   ============================================================ */
+/* ---------- RENDER ---------- */
 function render(){
  updateTopbar();
  Object.values(APP.charts).forEach(c=>{try{c.destroy()}catch(e){}});
  APP.charts = {};
  const el = document.getElementById('content');
  if (!APP.currentDS){ showWelcome(); return; }
- if (APP.view === 'overview') renderOverview(el);
- else if (APP.view === 'explore') renderExplore(el);
- else if (APP.view === 'builder') renderBuilder(el);
+ const records = getFiltered();
+ APP.drawerRecords = records;
+ el.innerHTML = `
+  ${heroStripHTML(records)}
+  ${insightsHTML(records)}
+  ${filterBarHTML()}
+  ${gridHTML(records)}
+ `;
+ setTimeout(()=>initInsights(records), 60);
+ wireGrid();
+ wireAddFilter();
 }
 
 function showWelcome(){
@@ -834,14 +658,12 @@ function showWelcome(){
      <defs><linearGradient id="sgw" x1="4" y1="2" x2="36" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#DC552A"/><stop offset="1" stop-color="#950f18"/></linearGradient></defs>
    </svg>
    <div class="welcome-eyebrow">BreachShield Data Intelligence</div>
-   <div class="welcome-h">Drop in a JSON file —<br>get an <em>instant BI dashboard</em>.</div>
-   <div class="welcome-sub">Schema autodetection, smart filters per field, animated reports, custom chart builder, full-text search and CSV export. Works on any tabular JSON: an array of records or an object with multiple arrays.</div>
-   <div class="welcome-actions">
-     <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
-       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-       Upload JSON
-     </button>
-   </div>
+   <div class="welcome-h">Drop in a JSON file —<br>get a <em>BI workbench</em> instantly.</div>
+   <div class="welcome-sub">Schema autodetection · smart filters per field · KPIs & live charts · always-visible parsed table · slide-out record cards · global search · CSV export. Works on any tabular JSON.</div>
+   <button class="btn-primary" onclick="document.getElementById('fileInput').click()" style="font-size:13px;padding:10px 18px">
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+     Upload JSON
+   </button>
    <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
      <div class="upload-zone-title">Click to upload, or drag a .json file anywhere</div>
@@ -850,227 +672,277 @@ function showWelcome(){
  </div>`;
 }
 
-/* ============================================================
-   OVERVIEW
-   ============================================================ */
-function renderOverview(el){
- const records = getFiltered();
+/* ---------- HERO STRIP (KPIs) ---------- */
+function heroStripHTML(records){
  const total = APP.datasets[APP.currentDS].length;
  const fields = Object.entries(APP.schema);
+ const cats = fields.filter(([,f])=>f.type==='category');
+ const nums = fields.filter(([,f])=>f.type==='number');
+ const dates = fields.filter(([,f])=>f.type==='date');
 
- const numFields = fields.filter(([,f])=>f.type==='number').length;
- const catFields = fields.filter(([,f])=>f.type==='category'||f.type==='boolean').length;
- const dateFields = fields.filter(([,f])=>f.type==='date').length;
+ // pick most "interesting" numeric for sum
+ const bestNum = nums.length ? nums.sort((a,b)=>Math.abs(b[1].sum)-Math.abs(a[1].sum))[0] : null;
+ const numSum = bestNum ? records.reduce((s,r)=>s + (typeof r[bestNum[0]]==='number'?r[bestNum[0]]:0), 0) : null;
+ const numAvg = bestNum && records.length ? numSum / records.filter(r=>typeof r[bestNum[0]]==='number').length : null;
 
- el.innerHTML = `
-  <div class="kpi-grid">
-   <div class="kpi-card" style="--kc:#DC552A">
-    <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
-    <div class="kpi-value">${records.length.toLocaleString()}</div>
-    <div class="kpi-label">Records (filtered)</div>
-    <div class="kpi-sub">${total.toLocaleString()} total · ${total?Math.round(records.length/total*100):0}%</div>
+ // top category value
+ const bestCat = cats.length ? cats.sort((a,b)=>{
+   const score = c => { const x = c[1].cardinality; if (x>=3 && x<=15) return 100 - x; if (x<3) return x; return -x; };
+   return score(b) - score(a);
+ })[0] : null;
+ let topCatVal = null, topCatCnt = 0;
+ if (bestCat){
+   const counts = new Map();
+   for (const r of records){ const v = r[bestCat[0]]; if (v!=null && v!=='') counts.set(String(v), (counts.get(String(v))||0)+1); }
+   const top = [...counts.entries()].sort((a,b)=>b[1]-a[1])[0];
+   if (top){ topCatVal = top[0]; topCatCnt = top[1]; }
+ }
+
+ // date range of filtered
+ let dateRange = null;
+ if (dates.length){
+   const f = dates[0][0];
+   const ts = records.map(r=>r[f]).filter(Boolean).map(v=>new Date(v).getTime()).filter(t=>!isNaN(t));
+   if (ts.length){ dateRange = {min:Math.min(...ts), max:Math.max(...ts), field:dates[0][0]}; }
+ }
+
+ const cards = [];
+ cards.push({c:'#DC552A',label:'Records',v:records.length.toLocaleString(),sub:filterPercent(records.length, total),icon:I.list});
+ cards.push({c:'#60a5fa',label:'Fields',v:fields.length,sub:`${cats.length} cat · ${nums.length} num · ${dates.length} date`,icon:I.layers});
+ cards.push({c:'#a78bfa',label:'Filters',v:Object.keys(APP.filters).length,sub:Object.keys(APP.filters).length?'Active right now':'No filters applied',icon:I.filter});
+ if (bestNum){
+   cards.push({c:'#22c55e',label:`Sum · ${humanize(bestNum[0])}`,v:formatNum(numSum),sub:'Across filtered',icon:I.sigma,smallV:true});
+   if (numAvg !== null && !isNaN(numAvg)) cards.push({c:'#fb923c',label:`Avg · ${humanize(bestNum[0])}`,v:formatNum(numAvg),sub:'Per record',icon:I.bar,smallV:true});
+ }
+ if (bestCat && topCatVal){
+   cards.push({c:'#f472b6',label:`Top · ${humanize(bestCat[0])}`,v:topCatVal.length>14?topCatVal.slice(0,14)+'…':topCatVal,sub:`${topCatCnt.toLocaleString()} records`,icon:I.crown,smallV:true});
+ }
+ if (dateRange){
+   cards.push({c:'#22d3ee',label:`Range · ${humanize(dateRange.field)}`,v:formatDate(dateRange.min,true)+' → '+formatDate(dateRange.max,true),sub:`${Math.round((dateRange.max-dateRange.min)/86400000)} days span`,icon:I.calendar,smallV:true});
+ }
+
+ return `<section class="hero-strip">${cards.slice(0,6).map(k=>`
+   <div class="kpi" style="--kc:${k.c}">
+     <div class="kpi-h">
+       <div class="kpi-icon">${k.icon}</div>
+       <div class="kpi-label">${escapeHTML(k.label)}</div>
+     </div>
+     <div class="kpi-v ${k.smallV?'small':''}" title="${escapeAttr(k.v)}">${escapeHTML(k.v)}</div>
+     ${k.sub?`<div class="kpi-sub">${escapeHTML(k.sub)}</div>`:''}
    </div>
-   <div class="kpi-card" style="--kc:#60a5fa">
-    <div class="kpi-icon" style="background:rgba(96,165,250,.12);color:#60a5fa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-    <div class="kpi-value">${numFields}</div>
-    <div class="kpi-label">Numeric fields</div>
+ `).join('')}</section>`;
+}
+
+function filterPercent(n, total){
+ if (n === total) return `100% · all data`;
+ const pct = total ? Math.round(n/total*100) : 0;
+ return `${pct}% of ${total.toLocaleString()}`;
+}
+
+/* ---------- INSIGHTS (3 auto charts) ---------- */
+function insightsHTML(records){
+ const picks = pickAutoCharts();
+ if (!picks.length) return '';
+ return `<section class="insight-strip">${picks.map((p,i)=>`
+   <div class="insight-card ${i===0?'featured':''}">
+     <div class="insight-h">
+       <div>
+         <div class="insight-sub">${p.eyebrow}</div>
+         <div class="insight-title">${p.title}</div>
+       </div>
+     </div>
+     <div class="insight-canvas"><canvas id="insight${i}"></canvas></div>
    </div>
-   <div class="kpi-card" style="--kc:#a78bfa">
-    <div class="kpi-icon" style="background:rgba(167,139,250,.12);color:#a78bfa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg></div>
-    <div class="kpi-value">${catFields}</div>
-    <div class="kpi-label">Categorical / boolean</div>
-   </div>
-   <div class="kpi-card" style="--kc:#22c55e">
-    <div class="kpi-icon" style="background:rgba(34,197,94,.12);color:#22c55e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-    <div class="kpi-value">${dateFields}</div>
-    <div class="kpi-label">Date fields</div>
-   </div>
-   <div class="kpi-card" style="--kc:#f59e0b">
-    <div class="kpi-icon" style="background:rgba(245,158,11,.12);color:#f59e0b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
-    <div class="kpi-value">${Object.keys(APP.filters).length}</div>
-    <div class="kpi-label">Active filters</div>
-   </div>
-  </div>
-  <div class="fld-grid" id="fldGrid">
-   ${fields.map(([name,f])=>fieldCard(name,f,records)).join('')}
-  </div>
- `;
- // init mini charts
- setTimeout(()=>{
-   for (const [name,f] of fields){
-     if (f.type === 'number') initNumberMini(name, records);
-     else if (f.type === 'date') initDateMini(name, records);
-     else if (f.type === 'boolean') initBoolMini(name, records);
+ `).join('')}</section>`;
+}
+
+function pickAutoCharts(){
+ const fields = Object.entries(APP.schema);
+ const cats = fields.filter(([,f])=>f.type==='category');
+ const nums = fields.filter(([,f])=>f.type==='number');
+ const dates = fields.filter(([,f])=>f.type==='date');
+ const bools = fields.filter(([,f])=>f.type==='boolean');
+ const picks = [];
+ // best categorical breakdown
+ const bestCat = cats.sort((a,b)=>{
+   const score = c => { const x = c[1].cardinality; if (x>=3 && x<=12) return 100 - Math.abs(8 - x); return -x; };
+   return score(b) - score(a);
+ })[0];
+ if (bestCat){ picks.push({type:'doughnut', x:bestCat[0], agg:'count', title:`${humanize(bestCat[0])} breakdown`, eyebrow:'Distribution'}); }
+ else if (bools.length){ picks.push({type:'doughnut', x:bools[0][0], agg:'count', title:`${humanize(bools[0][0])}`, eyebrow:'Distribution'}); }
+ // num agg by category
+ if (nums.length){
+   const bn = nums.sort((a,b)=>Math.abs(b[1].sum)-Math.abs(a[1].sum))[0];
+   if (bestCat) picks.push({type:'bar', x:bestCat[0], y:bn[0], agg:'sum', title:`${humanize(bn[0])} by ${humanize(bestCat[0])}`, eyebrow:'Aggregation'});
+   else picks.push({type:'bar', x:bn[0], agg:'count', title:`${humanize(bn[0])} distribution`, eyebrow:'Histogram', isHistogram:true});
+ }
+ // time series
+ if (dates.length){ picks.push({type:'line', x:dates[0][0], agg:'count', title:`Records over time`, eyebrow:'Trend'}); }
+ else if (cats.length > 1 && cats[1]){ picks.push({type:'bar', x:cats[1][0], agg:'count', title:`${humanize(cats[1][0])} breakdown`, eyebrow:'Distribution'}); }
+ return picks.slice(0,3);
+}
+
+function initInsights(records){
+ const picks = pickAutoCharts();
+ picks.forEach((p, i) => initChart('insight'+i, p, records));
+}
+
+function initChart(id, cfg, records){
+ const ctx = document.getElementById(id); if (!ctx) return;
+ const X = cfg.x, Y = cfg.y, agg = cfg.agg;
+ const xField = APP.schema[X];
+ if (!xField) return;
+ const xKey = (rec) => {
+   const v = rec[X];
+   if (v === null || v === undefined || v === '') return '(null)';
+   if (xField.type === 'date'){ const d = new Date(v); return d.toISOString().slice(0,7); }
+   if (xField.type === 'number' && (xField.cardinality > 20 || cfg.isHistogram)){
+     const span = (xField.max-xField.min)||1;
+     const idx = Math.min(9, Math.floor((v-xField.min)/span*10));
+     return formatNum(xField.min + idx*span/10) + '–' + formatNum(xField.min + (idx+1)*span/10);
    }
- }, 80);
-}
-
-function fieldCard(name, f, records){
- let body = '';
- if (f.type === 'category' || (f.type === 'string' && f.cardinality <= 12) || f.type === 'boolean'){
-   if (f.type === 'boolean') body = `<div class="fld-chart"><canvas id="mini-${cssId(name)}"></canvas></div>`;
-   else body = topListHTML(name, records, f.type === 'category' ? 'cat' : 'alt');
- } else if (f.type === 'number'){
-   body = `<div class="fld-chart"><canvas id="mini-${cssId(name)}"></canvas></div>`;
- } else if (f.type === 'date'){
-   body = `<div class="fld-chart"><canvas id="mini-${cssId(name)}"></canvas></div>`;
- } else if (f.type === 'string'){
-   const sample = f.sample[0];
-   body = `<div style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono';line-height:1.5">${sample?escapeHTML(String(sample).slice(0,140)):'—'}${sample && String(sample).length>140?'…':''}</div>`;
- } else if (f.type === 'object' || f.type === 'array'){
-   const sample = f.sample[0];
-   body = `<pre style="font-family:'JetBrains Mono';font-size:10.5px;background:var(--bg3);padding:9px;border-radius:6px;max-height:120px;overflow:auto;color:var(--text3)">${escapeHTML(JSON.stringify(sample,null,2).slice(0,260))}</pre>`;
- }
- return `<div class="fld-card ${APP.filters[name]?'active':''}" onclick="toggleFilterEditor('${escapeAttr(name)}')" title="${escapeAttr(name)}">
-   <div class="fld-card-head">
-     <span class="type-pill t-${typeShort(f.type)}">${typeAbbr(f.type)}</span>
-     <div style="flex:1;min-width:0">
-       <div class="fld-card-name">${escapeHTML(humanize(name))}</div>
-       <div class="fld-card-meta">${escapeHTML(name)} · ${typeAbbr(f.type)} · ${f.filled} filled · ${f.nulls} null</div>
-     </div>
-   </div>
-   ${fieldStatsBlock(f)}
-   ${body}
- </div>`;
-}
-
-function fieldStatsBlock(f){
- const stats = [];
- if (f.type === 'number'){
-   stats.push(['min', formatNum(f.min)]);
-   stats.push(['max', formatNum(f.max)]);
-   stats.push(['avg', formatNum(f.avg)]);
-   stats.push(['sum', formatNum(f.sum)]);
- } else if (f.type === 'category' || f.type === 'string'){
-   stats.push(['distinct', f.cardinality.toLocaleString()]);
-   stats.push(['filled', f.filled.toLocaleString()]);
-   if (f.nulls) stats.push(['null', f.nulls.toLocaleString()]);
- } else if (f.type === 'date'){
-   stats.push(['from', formatDate(f.min)]);
-   stats.push(['to', formatDate(f.max)]);
-   stats.push(['filled', f.filled.toLocaleString()]);
- } else if (f.type === 'boolean'){
-   const t = f.values.get('true') || 0;
-   const fa = f.values.get('false') || 0;
-   stats.push(['true', t.toLocaleString()]);
-   stats.push(['false', fa.toLocaleString()]);
- } else {
-   stats.push(['filled', f.filled.toLocaleString()]);
-   if (f.nulls) stats.push(['null', f.nulls.toLocaleString()]);
- }
- return `<div class="fld-stats">${stats.map(s=>`<div class="fld-stat-item"><div class="fld-stat-l">${s[0]}</div><div class="fld-stat-v">${s[1]}</div></div>`).join('')}</div>`;
-}
-
-function topListHTML(name, records, kind){
- const counts = new Map();
+   return String(v);
+ };
+ const buckets = new Map();
  for (const rec of records){
-   const v = rec[name];
-   if (v === null || v === undefined || v === '') continue;
-   const k = String(v);
-   counts.set(k, (counts.get(k)||0)+1);
+   const k = xKey(rec);
+   if (!buckets.has(k)) buckets.set(k, []);
+   buckets.get(k).push(rec);
  }
- const top = [...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,6);
- const max = top[0]?.[1] || 1;
- if (!top.length) return `<div style="color:var(--text3);font-size:12px;padding:8px 0;font-style:italic">No values</div>`;
- return `<div class="fld-top-list">${top.map(([val,cnt])=>{
-   const pct = (cnt/max)*100;
-   return `<div class="fld-top-row" onclick="event.stopPropagation();drillFilter('${escapeAttr(name)}', '${escapeAttr(val)}')">
-     <div class="fld-top-bar-wrap" title="${escapeAttr(val)}">
-       <div class="fld-top-bar ${kind}" style="width:${pct}%"></div>
-       <span class="fld-top-name">${escapeHTML(val)}</span>
-     </div>
-     <span class="fld-top-count">${cnt.toLocaleString()}</span>
-   </div>`;
- }).join('')}</div>`;
-}
+ let entries = [...buckets.entries()];
+ if (xField.type === 'date' || (xField.type === 'number' && (xField.cardinality > 20 || cfg.isHistogram))) entries.sort((a,b)=>a[0].localeCompare(b[0]));
+ else entries.sort((a,b)=>b[1].length - a[1].length);
+ if (entries.length > 12 && cfg.type === 'doughnut') entries = entries.slice(0,12);
+ if (entries.length > 20 && xField.type !== 'date') entries = entries.slice(0,20);
 
-function drillFilter(field, val){
- const cur = APP.filters[field];
- if (cur && cur.op === 'in' && cur.values.length === 1 && cur.values[0] === val){
-   delete APP.filters[field];
- } else {
-   APP.filters[field] = {field, op:'in', values:[val]};
- }
- APP.page = 1;
- buildSidebar(); render();
-}
+ const labels = entries.map(e=>e[0]);
+ const aggregate = (recs) => {
+   if (agg === 'count') return recs.length;
+   const vals = recs.map(r=>r[Y]).filter(v=>typeof v==='number');
+   if (!vals.length) return 0;
+   if (agg === 'sum') return vals.reduce((s,v)=>s+v,0);
+   if (agg === 'avg') return vals.reduce((s,v)=>s+v,0)/vals.length;
+   if (agg === 'min') return Math.min(...vals);
+   if (agg === 'max') return Math.max(...vals);
+   return 0;
+ };
+ const data = entries.map(([,recs])=>aggregate(recs));
+ const isCircular = cfg.type === 'pie' || cfg.type === 'doughnut';
 
-function initNumberMini(name, records){
- const ctx = document.getElementById('mini-'+cssId(name)); if (!ctx) return;
- const f = APP.schema[name];
- const vals = records.map(r=>r[name]).filter(v=>typeof v === 'number');
- if (!vals.length) return;
- const bins = 10;
- const min = f.min, max = f.max;
- const span = (max - min) || 1;
- const buckets = Array(bins).fill(0);
- for (const v of vals){
-   const idx = Math.min(bins-1, Math.floor((v-min)/span*bins));
-   buckets[idx]++;
- }
- const labels = buckets.map((_,i)=>formatNum(min + (i+0.5)*span/bins));
- APP.charts['mini-'+name] = new Chart(ctx, {
-   type:'bar',
-   data:{labels, datasets:[{data:buckets, backgroundColor:'rgba(220,85,42,.45)', borderColor:'#DC552A', borderWidth:1, borderRadius:3}]},
-   options:miniOpts()
+ APP.charts[id] = new Chart(ctx, {
+   type: cfg.type,
+   data:{labels, datasets:[{
+     label: agg==='count'?'Count':`${agg} of ${Y}`,
+     data,
+     backgroundColor: isCircular ? labels.map((_,i)=>palette[i%palette.length]) : 'rgba(220,85,42,.55)',
+     borderColor: isCircular ? labels.map(()=>'rgba(8,10,13,.6)') : '#DC552A',
+     borderWidth: isCircular ? 2 : 1.5,
+     borderRadius: cfg.type==='bar'?6:0,
+     tension:.35, fill: cfg.type==='line', pointRadius: cfg.type==='line'?0:undefined, pointHoverRadius: 4
+   }]},
+   options:{
+     responsive:true, maintainAspectRatio:false,
+     animation:{duration:900, easing:'easeOutQuart'},
+     plugins:{
+       legend:{display: isCircular, position:'right', labels:{color:'#9ba3ae', boxWidth:9, padding:9, font:{size:10.5, family:"'Space Grotesk'"}}},
+       tooltip:{backgroundColor:'#1c212c',padding:9,cornerRadius:7,titleFont:{size:11,family:"'Space Grotesk'"},bodyFont:{size:11,family:"'Space Grotesk'"},callbacks:{label:c => isCircular ? `${c.label}: ${formatNum(c.parsed)}` : `${formatNum(c.parsed.y)}`}}
+     },
+     ...(isCircular?{cutout:cfg.type==='doughnut'?'66%':0}:{
+       scales:{
+         x:{grid:{display:false},ticks:{color:'#9ba3ae',font:{size:10},maxRotation:35,autoSkip:true,maxTicksLimit:12}},
+         y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#9ba3ae',font:{size:10},callback:v=>formatNum(v)},beginAtZero:true}
+       }
+     })
+   }
  });
-}
 
-function initDateMini(name, records){
- const ctx = document.getElementById('mini-'+cssId(name)); if (!ctx) return;
- const f = APP.schema[name];
- const dates = records.map(r=>r[name]).filter(v=>v).map(v=>new Date(v).getTime()).filter(t=>!isNaN(t));
- if (!dates.length) return;
- const min = f.min, max = f.max;
- const buckets = 14;
- const span = (max - min) || 1;
- const counts = Array(buckets).fill(0);
- for (const t of dates){
-   const idx = Math.min(buckets-1, Math.floor((t-min)/span*buckets));
-   counts[idx]++;
- }
- const labels = counts.map((_,i)=>formatDate(min + (i+0.5)*span/buckets));
- APP.charts['mini-'+name] = new Chart(ctx, {
-   type:'line',
-   data:{labels, datasets:[{data:counts, borderColor:'#22c55e', backgroundColor:'rgba(34,197,94,.18)', borderWidth:2, tension:.4, fill:true, pointRadius:0}]},
-   options:miniOpts()
- });
-}
-
-function initBoolMini(name, records){
- const ctx = document.getElementById('mini-'+cssId(name)); if (!ctx) return;
- let t = 0, fa = 0;
- for (const rec of records){
-   if (rec[name] === true) t++;
-   else if (rec[name] === false) fa++;
- }
- APP.charts['mini-'+name] = new Chart(ctx, {
-   type:'doughnut',
-   data:{labels:['true','false'],datasets:[{data:[t,fa],backgroundColor:['#22c55e','#f87171'],borderWidth:0}]},
-   options:{responsive:true,maintainAspectRatio:false,cutout:'65%',animation:{duration:900,easing:'easeOutQuart'},plugins:{legend:{position:'bottom',labels:{color:'#9ba3ae',boxWidth:10,padding:8,font:{size:11}}}}}
- });
-}
-
-function miniOpts(){
- return {
-   responsive:true, maintainAspectRatio:false,
-   animation:{duration:900,easing:'easeOutQuart'},
-   plugins:{legend:{display:false},tooltip:{backgroundColor:'#1c212c',padding:8,cornerRadius:6,displayColors:false,titleFont:{size:11},bodyFont:{size:11}}},
-   scales:{
-     y:{display:false,grid:{display:false}},
-     x:{grid:{display:false},ticks:{color:'#5f6772',font:{size:9},maxRotation:0,autoSkip:true,maxTicksLimit:5}}
+ ctx.onclick = (evt) => {
+   const points = APP.charts[id].getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
+   if (points.length){
+     const idx = points[0].index;
+     const label = labels[idx];
+     drillFilter(X, label);
    }
  };
 }
 
-/* ============================================================
-   EXPLORE / TABLE
-   ============================================================ */
-function renderExplore(el){
- const records = getFiltered();
+function drillFilter(field, val){
+ const cur = APP.filters[field];
+ if (cur && cur.op === 'in' && cur.values.length === 1 && cur.values[0] === val) delete APP.filters[field];
+ else APP.filters[field] = {field, op:'in', values:[val]};
+ APP.page = 1; buildSidebar(); render();
+}
+
+/* ---------- FILTER BAR ---------- */
+function filterBarHTML(){
+ const filters = Object.entries(APP.filters);
+ return `<section class="filter-bar">
+   <span class="fb-label">Filters</span>
+   ${filters.map(([k,f])=>`<span class="chip" title="${escapeAttr(k)}">
+     <span class="chip-field">${escapeHTML(humanize(k))}</span>
+     <span class="chip-sep">·</span>
+     <span class="chip-value">${chipDescription(f)}</span>
+     <span class="chip-x" onclick="removeFilter('${escapeAttr(k)}')">×</span>
+   </span>`).join('')}
+   <button class="chip-add" id="addFilterBtn">
+     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+     Add filter
+   </button>
+   ${APP.search ? `<span class="chip" style="background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.22)">
+     <span class="chip-field" style="color:var(--yellow)">Search</span>
+     <span class="chip-sep">·</span>
+     <span class="chip-value">"${escapeHTML(APP.search)}"</span>
+     <span class="chip-x" onclick="document.getElementById('search').value='';APP.search='';APP.page=1;render();">×</span>
+   </span>` : ''}
+   <span class="fb-spacer"></span>
+   ${(filters.length || APP.search) ? `<span class="fb-clear" onclick="clearFilters()">Clear all</span>` : ''}
+ </section>`;
+}
+
+function chipDescription(f){
+ if (f.op === 'in') return f.values.length > 3 ? f.values.slice(0,3).map(escapeHTML).join(', ') + ` <span style="color:var(--text3)">+${f.values.length-3}</span>` : f.values.map(escapeHTML).join(', ');
+ if (f.op === 'between') return `${formatNum(f.min)} – ${formatNum(f.max)}`;
+ if (f.op === 'date_between') return `${formatDate(f.min)} – ${formatDate(f.max)}`;
+ if (f.op === 'contains') return `contains "${escapeHTML(f.text)}"`;
+ if (f.op === 'bool') return f.value ? 'true' : 'false';
+ return '';
+}
+
+function wireAddFilter(){
+ const btn = document.getElementById('addFilterBtn');
+ const pop = document.getElementById('addFilterPop');
+ if (!btn || !pop) return;
+ btn.addEventListener('click', e => {
+   e.stopPropagation();
+   const fields = Object.entries(APP.schema);
+   pop.innerHTML = `<div class="pop-title">Pick a field to filter</div>
+     ${fields.map(([n,f])=>`<div class="pop-row" data-field="${escapeAttr(n)}">
+       <span class="type-pill t-${typeShort(f.type)}">${typeAbbr(f.type)}</span>
+       <span class="field-name">${escapeHTML(humanize(n))}</span>
+       <span class="field-card-stat">${fieldStat(f)}</span>
+     </div>`).join('')}`;
+   const r = btn.getBoundingClientRect();
+   pop.style.left = r.left + 'px';
+   pop.style.top = (r.bottom + 6) + 'px';
+   pop.classList.add('open');
+   pop.querySelectorAll('.pop-row').forEach(row => row.addEventListener('click', () => {
+     pop.classList.remove('open');
+     APP.expandedFilter = row.dataset.field;
+     buildSidebar();
+     // ensure sidebar field is scrolled into view
+     setTimeout(() => {
+       const fr = document.querySelector(`.field-row[data-field="${row.dataset.field.replace(/"/g,'\\"')}"]`);
+       fr?.scrollIntoView({block:'center', behavior:'smooth'});
+     }, 50);
+   }));
+ });
+ document.addEventListener('click', (e) => { if (!e.target.closest('.popover') && !e.target.closest('#addFilterBtn')) pop.classList.remove('open'); });
+}
+
+/* ---------- GRID (always-visible table) ---------- */
+function gridHTML(records){
  const allCols = Object.keys(APP.schema);
  const cols = APP.visibleCols || allCols;
- // sort
  if (APP.sort.field){
    const f = APP.sort.field, dir = APP.sort.dir;
    records.sort((a,b)=>{
@@ -1086,63 +958,77 @@ function renderExplore(el){
  if (APP.page > totalPages) APP.page = totalPages;
  const start = (APP.page - 1) * APP.pageSize;
  const slice = records.slice(start, start + APP.pageSize);
+ APP.drawerRecords = records;
 
- el.innerHTML = `
-  <div class="table-toolbar">
-   <div class="tt-info">Showing <strong>${slice.length}</strong> of <strong>${total.toLocaleString()}</strong> records</div>
-   <div class="tt-spacer"></div>
-   <div class="col-toggle">
-     <button class="btn-ghost" id="colBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Columns (${cols.length}/${allCols.length})</button>
-     <div class="col-menu" id="colMenu">
-       <div class="col-menu-title">Visible columns</div>
+ return `<section class="grid-card">
+  <div class="grid-toolbar">
+   <span class="gt-info">Showing <strong>${slice.length}</strong> · <em>${total.toLocaleString()}</em> filtered · <strong>${APP.datasets[APP.currentDS].length.toLocaleString()}</strong> total</span>
+   <span class="gt-spacer"></span>
+   <div class="gt-act">
+     <button class="btn-ghost" id="colBtn">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+       Columns (${cols.length}/${allCols.length})
+     </button>
+     <div class="gt-menu" id="colMenu">
+       <div class="gt-menu-title">Visible columns</div>
        ${allCols.map(c=>`<label class="col-row" title="${escapeAttr(c)}"><input type="checkbox" data-col="${escapeAttr(c)}" ${cols.includes(c)?'checked':''}><span class="type-pill t-${typeShort(APP.schema[c].type)}">${typeAbbr(APP.schema[c].type)}</span><span style="flex:1;font-family:'Space Grotesk';font-weight:500">${escapeHTML(humanize(c))}</span></label>`).join('')}
      </div>
    </div>
   </div>
-  <div class="table-wrap">
-   <div class="table-scroll">
+  <div class="table-scroll">
    <table>
     <thead><tr>${cols.map(c=>{
       const sorted = APP.sort.field === c;
-      return `<th data-sort="${escapeAttr(c)}" class="${sorted?'sorted':''}" title="${escapeAttr(c)}"><span class="type-pill t-${typeShort(APP.schema[c].type)}" style="margin-right:6px">${typeAbbr(APP.schema[c].type)}</span>${escapeHTML(humanize(c))}${sorted?`<span class="arrow">${APP.sort.dir==='asc'?'▲':'▼'}</span>`:''}</th>`;
+      return `<th data-sort="${escapeAttr(c)}" class="${sorted?'sorted':''}" title="${escapeAttr(c)}"><span class="type-pill t-${typeShort(APP.schema[c].type)}" style="margin-right:5px">${typeAbbr(APP.schema[c].type)}</span>${escapeHTML(humanize(c))}${sorted?`<span class="arrow">${APP.sort.dir==='asc'?'▲':'▼'}</span>`:''}</th>`;
     }).join('')}</tr></thead>
     <tbody>
-     ${slice.length ? slice.map((rec,i) => `<tr data-idx="${start+i}">${cols.map(c=>renderCell(rec[c], APP.schema[c])).join('')}</tr>`).join('') : `<tr><td colspan="${cols.length}" style="text-align:center;color:var(--text3);padding:40px;font-style:italic">No records match the current filters</td></tr>`}
+     ${slice.length ? slice.map((rec) => {
+       const idx = records.indexOf(rec);
+       const isSel = APP.drawerIdx === idx;
+       return `<tr data-idx="${idx}" class="${isSel?'selected':''}">${cols.map(c=>renderCell(rec[c], APP.schema[c], APP.search)).join('')}</tr>`;
+     }).join('') : `<tr><td colspan="${cols.length}" style="text-align:center;color:var(--text3);padding:30px;font-style:italic">No records match the current filters</td></tr>`}
     </tbody>
    </table>
-   </div>
-   ${total > APP.pageSize ? `<div class="pagination">
-     <div class="page-info">Page ${APP.page} of ${totalPages} · ${APP.pageSize} per page</div>
+  </div>
+  ${total > 0 ? `<div class="pagination">
+     <div class="page-info">Page ${APP.page} of ${totalPages} ·
+       <select id="pgSize">
+         ${[10,25,50,100,250].map(n=>`<option value="${n}" ${APP.pageSize===n?'selected':''}>${n}</option>`).join('')}
+       </select>
+       per page
+     </div>
      <div class="page-controls">
-       <button class="pg-btn" id="pgFirst" ${APP.page<=1?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg></button>
-       <button class="pg-btn" id="pgPrev" ${APP.page<=1?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+       <button class="pg-btn" id="pgFirst" ${APP.page<=1?'disabled':''}>${I.dleft}</button>
+       <button class="pg-btn" id="pgPrev" ${APP.page<=1?'disabled':''}>${I.left}</button>
        <span class="page-cur">${APP.page} / ${totalPages}</span>
-       <button class="pg-btn" id="pgNext" ${APP.page>=totalPages?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-       <button class="pg-btn" id="pgLast" ${APP.page>=totalPages?'disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg></button>
+       <button class="pg-btn" id="pgNext" ${APP.page>=totalPages?'disabled':''}>${I.right}</button>
+       <button class="pg-btn" id="pgLast" ${APP.page>=totalPages?'disabled':''}>${I.dright}</button>
      </div>
    </div>`:''}
-  </div>
- `;
+ </section>`;
+}
 
- // sort
+function wireGrid(){
+ const el = document.getElementById('content');
+ if (!el) return;
  el.querySelectorAll('thead th').forEach(th => th.addEventListener('click', () => {
    const f = th.dataset.sort;
    if (APP.sort.field === f) APP.sort.dir = APP.sort.dir === 'asc' ? 'desc' : 'asc';
    else { APP.sort.field = f; APP.sort.dir = 'asc'; }
    render();
  }));
- // row click
  el.querySelectorAll('tbody tr[data-idx]').forEach(tr => tr.addEventListener('click', () => {
    const idx = Number(tr.dataset.idx);
-   openRecordModal(records[idx]);
+   openDrawer(idx);
  }));
- // pagination
+ const records = APP.drawerRecords || [];
+ const totalPages = Math.max(1, Math.ceil(records.length / APP.pageSize));
  const setP = p => { APP.page = Math.max(1, Math.min(totalPages, p)); render(); };
  el.querySelector('#pgFirst')?.addEventListener('click', () => setP(1));
  el.querySelector('#pgPrev')?.addEventListener('click', () => setP(APP.page-1));
  el.querySelector('#pgNext')?.addEventListener('click', () => setP(APP.page+1));
  el.querySelector('#pgLast')?.addEventListener('click', () => setP(totalPages));
- // columns menu
+ el.querySelector('#pgSize')?.addEventListener('change', e => { APP.pageSize = Number(e.target.value); APP.page = 1; render(); });
  const colBtn = el.querySelector('#colBtn');
  const colMenu = el.querySelector('#colMenu');
  colBtn?.addEventListener('click', e => { e.stopPropagation(); colMenu.classList.toggle('open'); });
@@ -1155,286 +1041,90 @@ function renderExplore(el){
  }));
 }
 
-function renderCell(v, f){
+function renderCell(v, f, q){
  if (v === null || v === undefined || v === '') return `<td class="cell-null">—</td>`;
  if (f.type === 'number') return `<td class="cell-num">${formatNum(v)}</td>`;
  if (f.type === 'boolean') return `<td class="cell-bool ${v?'yes':'no'}">${v?'true':'false'}</td>`;
  if (f.type === 'date') return `<td class="cell-date">${formatDate(new Date(v).getTime())}</td>`;
- if (f.type === 'object' || f.type === 'array') return `<td class="cell-obj" title="${escapeAttr(JSON.stringify(v))}">${escapeHTML(JSON.stringify(v).slice(0,50))}${JSON.stringify(v).length>50?'…':''}</td>`;
- if (f.type === 'category') return `<td class="cell-cat">${escapeHTML(String(v))}</td>`;
- return `<td title="${escapeAttr(String(v))}">${escapeHTML(String(v))}</td>`;
+ if (f.type === 'object' || f.type === 'array'){ const s = JSON.stringify(v); return `<td class="cell-obj" title="${escapeAttr(s)}">${highlightHTML(s.slice(0,50)+(s.length>50?'…':''), q)}</td>`; }
+ if (f.type === 'category') return `<td class="cell-cat">${highlightHTML(String(v), q)}</td>`;
+ return `<td title="${escapeAttr(String(v))}">${highlightHTML(String(v), q)}</td>`;
 }
 
-/* ============================================================
-   RECORD MODAL
-   ============================================================ */
-function openRecordModal(rec){
+function highlightHTML(s, q){
+ const txt = escapeHTML(String(s));
+ if (!q) return txt;
+ const qe = q.trim();
+ if (!qe) return txt;
+ const re = new RegExp('(' + qe.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'ig');
+ return txt.replace(re, '<mark>$1</mark>');
+}
+
+/* ---------- DRAWER ---------- */
+function openDrawer(idx){
+ const records = APP.drawerRecords;
+ if (!records || idx < 0 || idx >= records.length) return;
+ APP.drawerIdx = idx;
+ const rec = records[idx];
  const fields = Object.keys(APP.schema);
+ const titleField = fields.find(k => /name|title|number|label|email/i.test(k) && rec[k]) || fields[0];
+ const title = rec[titleField] != null ? String(rec[titleField]) : '(record)';
  const rows = fields.map(name => {
    const f = APP.schema[name];
    const v = rec[name];
-   let val;
-   if (v === null || v === undefined || v === '') val = '<span style="color:var(--text3);font-style:italic">null</span>';
+   let val, cls = '';
+   if (v === null || v === undefined || v === '') val = `<span style="color:var(--text4);font-style:italic">null</span>`;
    else if (f.type === 'object' || f.type === 'array') val = `<pre>${escapeHTML(JSON.stringify(v,null,2))}</pre>`;
-   else if (f.type === 'date') val = formatDate(new Date(v).getTime()) + ` <span style="color:var(--text3);font-size:11px;margin-left:4px">${escapeHTML(String(v))}</span>`;
-   else if (f.type === 'number') val = `<span style="font-family:'JetBrains Mono';font-weight:500">${formatNum(v)}</span>`;
-   else if (f.type === 'boolean') val = `<span style="color:${v?'var(--green)':'var(--rose)'};font-weight:600;font-family:'Space Grotesk'">${v?'true':'false'}</span>`;
-   else val = escapeHTML(String(v));
-   return `<div class="field-detail" title="${escapeAttr(name)}">
-     <div class="fd-label"><span class="type-pill t-${typeShort(f.type)}" style="margin-right:6px">${typeAbbr(f.type)}</span>${escapeHTML(humanize(name))}</div>
-     <div class="fd-value">${val}</div>
+   else if (f.type === 'date') val = formatDate(new Date(v).getTime()) + ` <span style="color:var(--text3);font-size:11px;margin-left:4px;font-family:'JetBrains Mono'">${escapeHTML(String(v))}</span>`;
+   else if (f.type === 'number'){ val = formatNum(v); cls = 'mono'; }
+   else if (f.type === 'boolean') val = `<span style="color:${v?'var(--green)':'var(--rose)'};font-weight:600">${v?'true':'false'}</span>`;
+   else val = highlightHTML(String(v), APP.search);
+   return `<div class="field-row-d" title="${escapeAttr(name)}">
+     <div class="fd-label"><span class="type-pill t-${typeShort(f.type)}">${typeAbbr(f.type)}</span><span style="word-break:break-word">${escapeHTML(humanize(name))}</span></div>
+     <div class="fd-value ${cls}">${val}</div>
    </div>`;
  }).join('');
- const titleField = fields.find(k => /name|title|number|id$/i.test(k) && rec[k]) || fields[0];
- const title = rec[titleField] != null ? String(rec[titleField]) : '(record)';
- document.getElementById('modal').innerHTML = `
-   <div class="modal-head">
-     <div>
-       <div class="modal-eyebrow">${escapeHTML(humanize(APP.currentDS))} · record</div>
-       <div class="modal-title">${escapeHTML(title)}</div>
+ const drawer = document.getElementById('drawer');
+ drawer.innerHTML = `
+   <div class="drawer-h">
+     <div class="drawer-h-info">
+       <div class="drawer-eye">${escapeHTML(humanize(APP.currentDS))} · record ${idx+1} of ${records.length}</div>
+       <div class="drawer-title">${escapeHTML(title)}</div>
      </div>
-     <button class="modal-close" onclick="closeModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+     <button class="drawer-x" onclick="closeDrawer()" title="Close">${I.close}</button>
    </div>
-   <div class="modal-body">${rows}</div>
+   <div class="drawer-body">${rows}</div>
+   <div class="drawer-nav">
+     <button onclick="navDrawer(-1)" ${idx<=0?'disabled':''}>${I.left} Previous</button>
+     <button onclick="navDrawer(1)" ${idx>=records.length-1?'disabled':''}>Next ${I.right}</button>
+   </div>
  `;
- document.getElementById('modalOverlay').classList.add('open');
- document.body.style.overflow = 'hidden';
+ drawer.classList.add('open');
+ document.getElementById('drawerBack').classList.add('open');
+ // mark selected in table
+ document.querySelectorAll('tbody tr').forEach(tr => tr.classList.toggle('selected', Number(tr.dataset.idx) === idx));
 }
 
-function closeModal(){
- document.getElementById('modalOverlay').classList.remove('open');
- document.body.style.overflow = '';
+function navDrawer(delta){
+ const next = APP.drawerIdx + delta;
+ if (next >= 0 && next < (APP.drawerRecords?.length||0)) openDrawer(next);
 }
 
-/* ============================================================
-   BUILDER (REPORTS)
-   ============================================================ */
-function renderBuilder(el){
- const fields = Object.entries(APP.schema);
- const ctypes = [
-   {id:'bar',label:'Bar', svg:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>'},
-   {id:'line',label:'Line', svg:'<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'},
-   {id:'pie',label:'Pie', svg:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>'},
-   {id:'doughnut',label:'Donut', svg:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/>'}
- ];
-
- // pick defaults
- if (!APP.builder.x){
-   const cat = fields.find(([,f])=>f.type==='category'||f.type==='string'||f.type==='boolean');
-   if (cat) APP.builder.x = cat[0];
- }
- if (!APP.builder.y){
-   const num = fields.find(([,f])=>f.type==='number');
-   if (num) APP.builder.y = num[0];
- }
-
- el.innerHTML = `
-  <div class="builder-grid">
-   <div class="builder-config">
-    <div class="cfg-section">
-      <div class="cfg-label">Chart type</div>
-      <div class="chart-types">
-        ${ctypes.map(t=>`<div class="ctype ${APP.builder.type===t.id?'active':''}" data-t="${t.id}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${t.svg}</svg>
-          ${t.label}
-        </div>`).join('')}
-      </div>
-    </div>
-
-    <div class="cfg-section">
-      <div class="cfg-label">Group by (X / categories)</div>
-      <select class="cfg-select" id="bX">
-        ${fields.filter(([,f])=>f.type!=='object'&&f.type!=='array').map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.x===n?'selected':''}>${escapeHTML(humanize(n))} · ${typeAbbr(f.type)}</option>`).join('')}
-      </select>
-    </div>
-
-    <div class="cfg-section">
-      <div class="cfg-label">Aggregation</div>
-      <select class="cfg-select" id="bAgg">
-        <option value="count" ${APP.builder.agg==='count'?'selected':''}>Count records</option>
-        <option value="sum" ${APP.builder.agg==='sum'?'selected':''}>Sum of value</option>
-        <option value="avg" ${APP.builder.agg==='avg'?'selected':''}>Average of value</option>
-        <option value="min" ${APP.builder.agg==='min'?'selected':''}>Minimum of value</option>
-        <option value="max" ${APP.builder.agg==='max'?'selected':''}>Maximum of value</option>
-      </select>
-    </div>
-
-    <div class="cfg-section" id="bYWrap" style="${APP.builder.agg==='count'?'opacity:.4;pointer-events:none':''}">
-      <div class="cfg-label">Value field (Y)</div>
-      <select class="cfg-select" id="bY">
-        ${fields.filter(([,f])=>f.type==='number').map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.y===n?'selected':''}>${escapeHTML(humanize(n))}</option>`).join('') || '<option>(no numeric fields)</option>'}
-      </select>
-    </div>
-
-    ${APP.builder.type === 'bar' || APP.builder.type === 'line' ? `<div class="cfg-section">
-      <div class="cfg-label">Stack / colour by (optional)</div>
-      <select class="cfg-select" id="bGroup">
-        <option value="">— none —</option>
-        ${fields.filter(([n,f])=>(f.type==='category'||f.type==='boolean'||f.type==='string'&&f.cardinality<=15)&&n!==APP.builder.x).map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.group===n?'selected':''}>${escapeHTML(n)} · ${typeAbbr(f.type)}</option>`).join('')}
-      </select>
-    </div>` : ''}
-   </div>
-
-   <div class="builder-canvas">
-    <div class="canvas-head">
-     <div>
-      <h3 id="canvasTitle">${chartTitle()}</h3>
-      <p id="canvasSub">${chartSubtitle()}</p>
-     </div>
-    </div>
-    <div class="canvas-chart"><canvas id="rpChart"></canvas></div>
-   </div>
-  </div>
- `;
- el.querySelectorAll('.ctype').forEach(b => b.addEventListener('click', () => {
-   APP.builder.type = b.dataset.t;
-   renderBuilder(el);
- }));
- el.querySelector('#bX')?.addEventListener('change', e => { APP.builder.x = e.target.value; renderBuilder(el); });
- el.querySelector('#bY')?.addEventListener('change', e => { APP.builder.y = e.target.value; renderBuilder(el); });
- el.querySelector('#bAgg')?.addEventListener('change', e => { APP.builder.agg = e.target.value; renderBuilder(el); });
- el.querySelector('#bGroup')?.addEventListener('change', e => { APP.builder.group = e.target.value || null; renderBuilder(el); });
- setTimeout(() => initBuilderChart(), 60);
+function closeDrawer(){
+ APP.drawerIdx = null;
+ document.getElementById('drawer')?.classList.remove('open');
+ document.getElementById('drawerBack')?.classList.remove('open');
+ document.querySelectorAll('tbody tr.selected').forEach(tr => tr.classList.remove('selected'));
 }
 
-function chartTitle(){
- const x = APP.builder.x ? humanize(APP.builder.x) : '?';
- if (APP.builder.agg === 'count') return `Records by ${x}`;
- const y = APP.builder.y ? humanize(APP.builder.y) : '?';
- const aggMap = {sum:'Sum',avg:'Average',min:'Minimum',max:'Maximum'};
- return `${aggMap[APP.builder.agg]} of ${y} by ${x}`;
-}
-function chartSubtitle(){
- const records = getFiltered();
- return `${records.length.toLocaleString()} filtered records${APP.builder.group?` · stacked by ${humanize(APP.builder.group)}`:''}`;
-}
-
-function initBuilderChart(){
- const ctx = document.getElementById('rpChart'); if (!ctx) return;
- const records = getFiltered();
- const X = APP.builder.x;
- const Y = APP.builder.y;
- const agg = APP.builder.agg;
- const group = APP.builder.group;
-
- if (!X){ return; }
-
- // group by X
- const buckets = new Map();
- const xField = APP.schema[X];
- const xKey = (rec) => {
-   const v = rec[X];
-   if (v === null || v === undefined || v === '') return '(null)';
-   if (xField.type === 'date'){
-     const d = new Date(v);
-     return d.toISOString().slice(0,7); // year-month bucket
-   }
-   if (xField.type === 'number' && xField.cardinality > 20){
-     const span = (xField.max-xField.min)||1;
-     const idx = Math.min(9, Math.floor((v-xField.min)/span*10));
-     return formatNum(xField.min + idx*span/10) + ' – ' + formatNum(xField.min + (idx+1)*span/10);
-   }
-   return String(v);
- };
- for (const rec of records){
-   const k = xKey(rec);
-   if (!buckets.has(k)) buckets.set(k, []);
-   buckets.get(k).push(rec);
- }
-
- // sort buckets
- let entries = [...buckets.entries()];
- if (xField.type === 'date' || (xField.type === 'number' && xField.cardinality > 20)) entries.sort((a,b)=>a[0].localeCompare(b[0]));
- else entries.sort((a,b)=>b[1].length - a[1].length);
- // limit to 20 if non-time
- if (entries.length > 20 && xField.type !== 'date') entries = entries.slice(0,20);
-
- const labels = entries.map(e=>e[0]);
- const aggregate = (recs) => {
-   if (agg === 'count') return recs.length;
-   const vals = recs.map(r=>r[Y]).filter(v=>typeof v==='number');
-   if (!vals.length) return 0;
-   if (agg === 'sum') return vals.reduce((s,v)=>s+v,0);
-   if (agg === 'avg') return vals.reduce((s,v)=>s+v,0)/vals.length;
-   if (agg === 'min') return Math.min(...vals);
-   if (agg === 'max') return Math.max(...vals);
-   return 0;
- };
-
- let datasets;
- if (group){
-   const groupVals = [...new Set(records.map(r=>r[group]).filter(v=>v!=null&&v!==''))].slice(0,10);
-   datasets = groupVals.map((gv,i) => ({
-     label: String(gv),
-     data: entries.map(([,recs]) => aggregate(recs.filter(r=>r[group]===gv))),
-     backgroundColor: palette[i%palette.length] + (APP.builder.type==='line'?'33':'cc'),
-     borderColor: palette[i%palette.length],
-     borderWidth: 1.5,
-     borderRadius: APP.builder.type==='bar'?6:0,
-     tension: .35,
-     fill: APP.builder.type === 'line'
-   }));
- } else {
-   datasets = [{
-     label: agg==='count'?'Count':`${agg} of ${Y}`,
-     data: entries.map(([,recs])=>aggregate(recs)),
-     backgroundColor: APP.builder.type === 'pie' || APP.builder.type === 'doughnut' ? labels.map((_,i)=>palette[i%palette.length]) : 'rgba(220,85,42,.5)',
-     borderColor: '#DC552A',
-     borderWidth: APP.builder.type === 'pie' || APP.builder.type === 'doughnut' ? 0 : 1.5,
-     borderRadius: 6,
-     tension: .35,
-     fill: APP.builder.type === 'line'
-   }];
- }
-
- const isCircular = APP.builder.type === 'pie' || APP.builder.type === 'doughnut';
- APP.charts.rp = new Chart(ctx, {
-   type: APP.builder.type,
-   data:{labels, datasets},
-   options:{
-     responsive:true, maintainAspectRatio:false,
-     animation:{duration:1100, easing:'easeOutQuart'},
-     plugins:{
-       legend:{display: !!group || isCircular, position: isCircular?'right':'top', labels:{color:'#9ba3ae',boxWidth:10,padding:10,font:{size:11.5}}},
-       tooltip:{backgroundColor:'#1c212c',padding:10,cornerRadius:8,callbacks:{label:c => isCircular ? `${c.label}: ${formatNum(c.parsed)}` : `${c.dataset.label}: ${formatNum(c.parsed.y)}`}}
-     },
-     ...(isCircular?{cutout:APP.builder.type==='doughnut'?'62%':0}:{
-       scales:{
-         x:{grid:{display:false},ticks:{color:'#9ba3ae',font:{size:11},maxRotation:35,autoSkip:true,maxTicksLimit:14}},
-         y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#9ba3ae',font:{size:11},callback:v=>formatNum(v)}}
-       }
-     })
-   }
- });
-
- // click → drill filter
- ctx.onclick = (evt) => {
-   const points = APP.charts.rp.getElementsAtEventForMode(evt, 'nearest', {intersect:true}, true);
-   if (points.length){
-     const idx = points[0].index;
-     const label = labels[idx];
-     drillFilter(X, label);
-     APP.view = 'overview';
-     document.querySelectorAll('.view-tab').forEach(b=>b.classList.toggle('active', b.dataset.v==='overview'));
-     render();
-   }
- };
-}
-
-/* ============================================================
-   EXPORT CSV
-   ============================================================ */
+/* ---------- EXPORT CSV ---------- */
 function exportCSV(){
  if (!APP.currentDS){ toast('error','No data','Load a dataset first'); return; }
  const records = getFiltered();
  if (!records.length){ toast('error','No rows','Nothing to export with current filters'); return; }
  const cols = APP.visibleCols || Object.keys(APP.schema);
- const esc = v => {
-   if (v == null) return '';
-   const s = typeof v === 'object' ? JSON.stringify(v) : String(v);
-   return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
- };
- const csv = [cols.join(','), ...records.map(r => cols.map(c => esc(r[c])).join(','))].join('\n');
+ const esc = v => { if (v == null) return ''; const s = typeof v === 'object' ? JSON.stringify(v) : String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; };
+ const csv = [cols.map(c=>humanize(c)).join(','), ...records.map(r => cols.map(c => esc(r[c])).join(','))].join('\n');
  const blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8'});
  const url = URL.createObjectURL(blob);
  const a = document.createElement('a');
@@ -1444,11 +1134,23 @@ function exportCSV(){
  toast('success','Exported',`${records.length.toLocaleString()} rows · ${cols.length} columns`);
 }
 
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-/* Humanize technical field/dataset names into Title Case
-   createdAt → "Created At" · user_id → "User ID" · URLPath → "URL Path" */
+/* ---------- ICONS ---------- */
+const I = {
+ list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+ layers:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+ filter:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
+ sigma:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 4 4 4 12 12 4 20 20 20"/></svg>',
+ bar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+ crown:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>',
+ calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+ left:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>',
+ right:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
+ dleft:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>',
+ dright:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>',
+ close:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+};
+
+/* ---------- UTILITIES ---------- */
 const ACRONYMS = new Set(['id','ids','url','urls','uri','api','apis','sql','crm','erp','poc','pocs','vat','iban','swift','bic','ip','dns','http','https','json','xml','csv','pdf','sku','utc','gmt','am','pm','iso','b2b','b2c','seo','sla','kpi','kpis','roi','arr','mrr','ltv','cac','aml','kyc','pii','pci','ssn','ein','tin','isbn','imei','mac','os','db','ui','ux','cdn','cms','fcm','sms','mms','tcp','udp','smtp','imap','pop3','ftp','ssh','tls','ssl','jwt','sso','mfa','2fa','otp','qr','rgb','rgba','hex']);
 function humanize(s){
  if (s == null || s === '') return '';
@@ -1473,16 +1175,14 @@ function formatNum(n){
  if (Number.isInteger(n)) return n.toLocaleString('en-US');
  return n.toFixed(2);
 }
-function formatDate(t){
+function formatDate(t, short){
  if (!t) return '—';
  const d = new Date(t);
  if (isNaN(d)) return '—';
+ if (short) return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
-function escapeHTML(s){
- if (s == null) return '';
- return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-}
+function escapeHTML(s){ if (s == null) return ''; return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 function escapeAttr(s){ return escapeHTML(s).replace(/`/g,'&#96;'); }
 function cssId(s){ return String(s).replace(/[^a-zA-Z0-9]/g,'_'); }
 
@@ -1495,97 +1195,52 @@ function toast(type, title, msg){
  setTimeout(() => { t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 3500);
 }
 
-/* ============================================================
-   DRAG & DROP + FILE
-   ============================================================ */
+/* ---------- FILE ---------- */
 function setupFileInput(){
  const fi = document.getElementById('fileInput');
- fi.addEventListener('change', e => {
-   const f = e.target.files[0];
-   if (f) loadFile(f);
-   fi.value = '';
- });
+ fi.addEventListener('change', e => { const f = e.target.files[0]; if (f) loadFile(f); fi.value = ''; });
  document.getElementById('loadBtn').addEventListener('click', () => fi.click());
  document.getElementById('resetBtn').addEventListener('click', () => clearFilters());
  document.getElementById('exportBtn').addEventListener('click', exportCSV);
-
  const dz = document.getElementById('dropzone');
  let dragCount = 0;
- window.addEventListener('dragenter', e => {
-   if (e.dataTransfer && e.dataTransfer.types.includes('Files')){
-     dragCount++;
-     dz.classList.add('over');
-   }
- });
+ window.addEventListener('dragenter', e => { if (e.dataTransfer && e.dataTransfer.types.includes('Files')){ dragCount++; dz.classList.add('over'); } });
  window.addEventListener('dragover', e => { e.preventDefault(); });
- window.addEventListener('dragleave', e => {
-   dragCount--;
-   if (dragCount <= 0){ dragCount = 0; dz.classList.remove('over'); }
- });
- window.addEventListener('drop', e => {
-   e.preventDefault();
-   dragCount = 0;
-   dz.classList.remove('over');
-   const f = e.dataTransfer.files?.[0];
-   if (f) loadFile(f);
- });
+ window.addEventListener('dragleave', e => { dragCount--; if (dragCount <= 0){ dragCount = 0; dz.classList.remove('over'); } });
+ window.addEventListener('drop', e => { e.preventDefault(); dragCount = 0; dz.classList.remove('over'); const f = e.dataTransfer.files?.[0]; if (f) loadFile(f); });
 }
-
 function loadFile(f){
- if (!f.name.toLowerCase().endsWith('.json')){
-   toast('error','Wrong format','Please drop a .json file');
-   return;
- }
+ if (!f.name.toLowerCase().endsWith('.json')){ toast('error','Wrong format','Please drop a .json file'); return; }
  const reader = new FileReader();
  reader.onload = e => {
-   try {
-     const j = JSON.parse(e.target.result);
-     ingestJSON(j, f.name.replace(/\.json$/i,''));
-     toast('success','Loaded', `${f.name} · ${(f.size/1024).toFixed(1)} KB`);
-   } catch(err){
-     toast('error','Parse error', err.message);
-   }
+   try { const j = JSON.parse(e.target.result); ingestJSON(j, f.name.replace(/\.json$/i,'')); toast('success','Loaded', `${f.name} · ${(f.size/1024).toFixed(1)} KB`); }
+   catch(err){ toast('error','Parse error', err.message); }
  };
  reader.readAsText(f);
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
+/* ---------- INIT ---------- */
 function init(){
- // chart defaults
  Chart.defaults.font.family = "'Space Grotesk', system-ui, sans-serif";
- Chart.defaults.font.size = 11.5;
+ Chart.defaults.font.size = 11;
  Chart.defaults.color = '#9ba3ae';
-
  setupFileInput();
-
- document.getElementById('menuToggle').addEventListener('click', () => {
-   document.getElementById('sidebar').classList.toggle('open');
- });
- document.getElementById('modalOverlay').addEventListener('click', e => {
-   if (e.target.id === 'modalOverlay') closeModal();
- });
- document.querySelectorAll('.view-tab').forEach(b => b.addEventListener('click', () => {
-   APP.view = b.dataset.v;
-   document.querySelectorAll('.view-tab').forEach(x => x.classList.toggle('active', x === b));
-   render();
- }));
+ document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+ document.getElementById('drawerBack').addEventListener('click', closeDrawer);
  document.getElementById('search').addEventListener('input', e => {
-   APP.search = e.target.value;
-   APP.page = 1;
-   updateTopbar();
-   if (APP.view !== 'builder') render();
+   APP.search = e.target.value; APP.page = 1; updateTopbar(); render();
  });
  document.addEventListener('keydown', e => {
-   if (e.key === 'Escape'){ closeModal(); }
+   if (e.key === 'Escape'){ closeDrawer(); document.getElementById('addFilterPop')?.classList.remove('open'); }
    if ((e.ctrlKey || e.metaKey) && e.key === 'k'){ e.preventDefault(); document.getElementById('search').focus(); }
+   if (document.getElementById('drawer').classList.contains('open')){
+     if (e.key === 'ArrowLeft' && !e.target.matches('input,textarea')) navDrawer(-1);
+     if (e.key === 'ArrowRight' && !e.target.matches('input,textarea')) navDrawer(1);
+   }
  });
-
  buildSidebar();
  loadDefault();
 }
-
 document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
