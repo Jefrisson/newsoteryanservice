@@ -579,8 +579,8 @@ function buildSidebar(){
    html += `<div class="side-section">
      <div class="side-section-head"><div class="side-section-title">Datasets · ${dsNames.length}</div></div>
      <div class="ds-pick">
-       ${dsNames.map(n=>`<div class="ds-item ${n===APP.currentDS?'active':''}" data-ds="${escapeAttr(n)}">
-         <span class="ds-name">${escapeHTML(n)}</span>
+       ${dsNames.map(n=>`<div class="ds-item ${n===APP.currentDS?'active':''}" data-ds="${escapeAttr(n)}" title="${escapeAttr(n)}">
+         <span class="ds-name">${escapeHTML(humanize(n))}</span>
          <span class="ds-count">${APP.datasets[n].length}</span>
        </div>`).join('')}
      </div>
@@ -606,7 +606,7 @@ function buildSidebar(){
        const expanded = APP.expandedFilter === name;
        return `<div class="field-row ${has?'has-filter':''}" data-field="${escapeAttr(name)}">
          <span class="type-pill t-${typeShort(f.type)}">${typeAbbr(f.type)}</span>
-         <span class="field-name" title="${escapeAttr(name)}">${escapeHTML(name)}</span>
+         <span class="field-name" title="${escapeAttr(name)}">${escapeHTML(humanize(name))}</span>
          <span class="field-card">${fieldStat(f)}</span>
        </div>${expanded?renderFilterEditor(name,f):''}`;
      }).join('')}
@@ -621,9 +621,9 @@ function buildSidebar(){
 function renderChips(){
  const filters = Object.entries(APP.filters);
  if (!filters.length) return '<div class="no-filters">No active filters</div>';
- return filters.map(([key,f]) => `<div class="chip">
+ return filters.map(([key,f]) => `<div class="chip" title="${escapeAttr(key)}">
    <div class="chip-content">
-     <div class="chip-field">${escapeHTML(key)}</div>
+     <div class="chip-field">${escapeHTML(humanize(key))}</div>
      <div class="chip-value">${chipDescription(f)}</div>
    </div>
    <span class="chip-x" onclick="event.stopPropagation();removeFilter('${escapeAttr(key)}')">×</span>
@@ -801,7 +801,8 @@ function updateTopbar(){
    document.getElementById('tbMeta').textContent = 'Drop a JSON file to begin';
    return;
  }
- document.getElementById('tbName').textContent = APP.currentDS;
+ document.getElementById('tbName').textContent = humanize(APP.currentDS);
+ document.getElementById('tbName').title = APP.currentDS;
  const total = APP.datasets[APP.currentDS].length;
  const filtered = getFiltered().length;
  const fieldCount = Object.keys(APP.schema).length;
@@ -920,12 +921,12 @@ function fieldCard(name, f, records){
    const sample = f.sample[0];
    body = `<pre style="font-family:'JetBrains Mono';font-size:10.5px;background:var(--bg3);padding:9px;border-radius:6px;max-height:120px;overflow:auto;color:var(--text3)">${escapeHTML(JSON.stringify(sample,null,2).slice(0,260))}</pre>`;
  }
- return `<div class="fld-card ${APP.filters[name]?'active':''}" onclick="toggleFilterEditor('${escapeAttr(name)}')">
+ return `<div class="fld-card ${APP.filters[name]?'active':''}" onclick="toggleFilterEditor('${escapeAttr(name)}')" title="${escapeAttr(name)}">
    <div class="fld-card-head">
      <span class="type-pill t-${typeShort(f.type)}">${typeAbbr(f.type)}</span>
      <div style="flex:1;min-width:0">
-       <div class="fld-card-name">${escapeHTML(name)}</div>
-       <div class="fld-card-meta">${typeAbbr(f.type)} · ${f.filled} filled · ${f.nulls} null</div>
+       <div class="fld-card-name">${escapeHTML(humanize(name))}</div>
+       <div class="fld-card-meta">${escapeHTML(name)} · ${typeAbbr(f.type)} · ${f.filled} filled · ${f.nulls} null</div>
      </div>
    </div>
    ${fieldStatsBlock(f)}
@@ -1094,7 +1095,7 @@ function renderExplore(el){
      <button class="btn-ghost" id="colBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Columns (${cols.length}/${allCols.length})</button>
      <div class="col-menu" id="colMenu">
        <div class="col-menu-title">Visible columns</div>
-       ${allCols.map(c=>`<label class="col-row"><input type="checkbox" data-col="${escapeAttr(c)}" ${cols.includes(c)?'checked':''}><span class="type-pill t-${typeShort(APP.schema[c].type)}">${typeAbbr(APP.schema[c].type)}</span><span style="flex:1;font-family:'Space Grotesk';font-weight:500">${escapeHTML(c)}</span></label>`).join('')}
+       ${allCols.map(c=>`<label class="col-row" title="${escapeAttr(c)}"><input type="checkbox" data-col="${escapeAttr(c)}" ${cols.includes(c)?'checked':''}><span class="type-pill t-${typeShort(APP.schema[c].type)}">${typeAbbr(APP.schema[c].type)}</span><span style="flex:1;font-family:'Space Grotesk';font-weight:500">${escapeHTML(humanize(c))}</span></label>`).join('')}
      </div>
    </div>
   </div>
@@ -1103,7 +1104,7 @@ function renderExplore(el){
    <table>
     <thead><tr>${cols.map(c=>{
       const sorted = APP.sort.field === c;
-      return `<th data-sort="${escapeAttr(c)}" class="${sorted?'sorted':''}"><span class="type-pill t-${typeShort(APP.schema[c].type)}" style="margin-right:6px">${typeAbbr(APP.schema[c].type)}</span>${escapeHTML(c)}${sorted?`<span class="arrow">${APP.sort.dir==='asc'?'▲':'▼'}</span>`:''}</th>`;
+      return `<th data-sort="${escapeAttr(c)}" class="${sorted?'sorted':''}" title="${escapeAttr(c)}"><span class="type-pill t-${typeShort(APP.schema[c].type)}" style="margin-right:6px">${typeAbbr(APP.schema[c].type)}</span>${escapeHTML(humanize(c))}${sorted?`<span class="arrow">${APP.sort.dir==='asc'?'▲':'▼'}</span>`:''}</th>`;
     }).join('')}</tr></thead>
     <tbody>
      ${slice.length ? slice.map((rec,i) => `<tr data-idx="${start+i}">${cols.map(c=>renderCell(rec[c], APP.schema[c])).join('')}</tr>`).join('') : `<tr><td colspan="${cols.length}" style="text-align:center;color:var(--text3);padding:40px;font-style:italic">No records match the current filters</td></tr>`}
@@ -1179,8 +1180,8 @@ function openRecordModal(rec){
    else if (f.type === 'number') val = `<span style="font-family:'JetBrains Mono';font-weight:500">${formatNum(v)}</span>`;
    else if (f.type === 'boolean') val = `<span style="color:${v?'var(--green)':'var(--rose)'};font-weight:600;font-family:'Space Grotesk'">${v?'true':'false'}</span>`;
    else val = escapeHTML(String(v));
-   return `<div class="field-detail">
-     <div class="fd-label"><span class="type-pill t-${typeShort(f.type)}" style="margin-right:6px">${typeAbbr(f.type)}</span>${escapeHTML(name)}</div>
+   return `<div class="field-detail" title="${escapeAttr(name)}">
+     <div class="fd-label"><span class="type-pill t-${typeShort(f.type)}" style="margin-right:6px">${typeAbbr(f.type)}</span>${escapeHTML(humanize(name))}</div>
      <div class="fd-value">${val}</div>
    </div>`;
  }).join('');
@@ -1189,7 +1190,7 @@ function openRecordModal(rec){
  document.getElementById('modal').innerHTML = `
    <div class="modal-head">
      <div>
-       <div class="modal-eyebrow">${escapeHTML(APP.currentDS)} · record</div>
+       <div class="modal-eyebrow">${escapeHTML(humanize(APP.currentDS))} · record</div>
        <div class="modal-title">${escapeHTML(title)}</div>
      </div>
      <button class="modal-close" onclick="closeModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -1243,7 +1244,7 @@ function renderBuilder(el){
     <div class="cfg-section">
       <div class="cfg-label">Group by (X / categories)</div>
       <select class="cfg-select" id="bX">
-        ${fields.filter(([,f])=>f.type!=='object'&&f.type!=='array').map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.x===n?'selected':''}>${escapeHTML(n)} · ${typeAbbr(f.type)}</option>`).join('')}
+        ${fields.filter(([,f])=>f.type!=='object'&&f.type!=='array').map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.x===n?'selected':''}>${escapeHTML(humanize(n))} · ${typeAbbr(f.type)}</option>`).join('')}
       </select>
     </div>
 
@@ -1261,7 +1262,7 @@ function renderBuilder(el){
     <div class="cfg-section" id="bYWrap" style="${APP.builder.agg==='count'?'opacity:.4;pointer-events:none':''}">
       <div class="cfg-label">Value field (Y)</div>
       <select class="cfg-select" id="bY">
-        ${fields.filter(([,f])=>f.type==='number').map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.y===n?'selected':''}>${escapeHTML(n)}</option>`).join('') || '<option>(no numeric fields)</option>'}
+        ${fields.filter(([,f])=>f.type==='number').map(([n,f])=>`<option value="${escapeAttr(n)}" ${APP.builder.y===n?'selected':''}>${escapeHTML(humanize(n))}</option>`).join('') || '<option>(no numeric fields)</option>'}
       </select>
     </div>
 
@@ -1297,15 +1298,15 @@ function renderBuilder(el){
 }
 
 function chartTitle(){
- const x = APP.builder.x || '?';
+ const x = APP.builder.x ? humanize(APP.builder.x) : '?';
  if (APP.builder.agg === 'count') return `Records by ${x}`;
- const y = APP.builder.y || '?';
+ const y = APP.builder.y ? humanize(APP.builder.y) : '?';
  const aggMap = {sum:'Sum',avg:'Average',min:'Minimum',max:'Maximum'};
  return `${aggMap[APP.builder.agg]} of ${y} by ${x}`;
 }
 function chartSubtitle(){
  const records = getFiltered();
- return `${records.length.toLocaleString()} filtered records${APP.builder.group?` · stacked by ${APP.builder.group}`:''}`;
+ return `${records.length.toLocaleString()} filtered records${APP.builder.group?` · stacked by ${humanize(APP.builder.group)}`:''}`;
 }
 
 function initBuilderChart(){
@@ -1446,6 +1447,24 @@ function exportCSV(){
 /* ============================================================
    UTILITIES
    ============================================================ */
+/* Humanize technical field/dataset names into Title Case
+   createdAt → "Created At" · user_id → "User ID" · URLPath → "URL Path" */
+const ACRONYMS = new Set(['id','ids','url','urls','uri','api','apis','sql','crm','erp','poc','pocs','vat','iban','swift','bic','ip','dns','http','https','json','xml','csv','pdf','sku','utc','gmt','am','pm','iso','b2b','b2c','seo','sla','kpi','kpis','roi','arr','mrr','ltv','cac','aml','kyc','pii','pci','ssn','ein','tin','isbn','imei','mac','os','db','ui','ux','cdn','cms','fcm','sms','mms','tcp','udp','smtp','imap','pop3','ftp','ssh','tls','ssl','jwt','sso','mfa','2fa','otp','qr','rgb','rgba','hex']);
+function humanize(s){
+ if (s == null || s === '') return '';
+ const str = String(s);
+ const parts = str
+   .replace(/[._\-]+/g,' ')
+   .replace(/([a-z\d])([A-Z])/g,'$1 $2')
+   .replace(/([A-Z]+)([A-Z][a-z])/g,'$1 $2')
+   .replace(/(\d+)([A-Za-z])/g,'$1 $2')
+   .replace(/([A-Za-z])(\d+)/g,'$1 $2')
+   .toLowerCase()
+   .split(/\s+/)
+   .filter(Boolean);
+ return parts.map(w => ACRONYMS.has(w) ? w.toUpperCase() : w[0].toUpperCase() + w.slice(1)).join(' ');
+}
+
 function formatNum(n){
  if (n === null || n === undefined || isNaN(n)) return '—';
  if (Math.abs(n) >= 1e9) return (n/1e9).toFixed(2).replace(/\.?0+$/,'') + 'B';
